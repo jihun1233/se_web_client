@@ -1,23 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
+import RoutingTest1 from './RouteingTest/RoutingTest1';
 
-function App() {
+const App = ({match}) => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Hi, I'm se_web_client!
-        </a>
-      </header>
+      <p>Hi, I'm se_web_client!</p>
+
+      <RoutingTest1></RoutingTest1>
+
+
+
+
     </div>
   );
 }
