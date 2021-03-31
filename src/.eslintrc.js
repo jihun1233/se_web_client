@@ -13,9 +13,7 @@ module.exports = {
         extensions: ['.js', '.jsx']
       }
     ],
-    'no-console': 0,
-    'react/prop-types': ['off']
-    // props의 타입체크를 처리하려면 prop-types보단 차라리 typescript를 사용하는게 낫다는 의견
+    'no-console': 0
   }
 };
 // prettier 설정을 마지막에 넣어야 겹치는 설정이 무시될 수 있다.
