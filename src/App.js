@@ -1,14 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
 import './App.css';
-import RoutingTest1 from './RouteingTest/RoutingTest1';
+import Main from './components/templates/Main';
 
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+`;
 const App = () => {
   return (
-    <div className="App">
-      <p>Hi, I`&apos;`m se_web_client!</p>
-
-      <RoutingTest1 />
-    </div>
+    <Container className="App">
+      <Main />
+    </Container>
   );
 };
 
