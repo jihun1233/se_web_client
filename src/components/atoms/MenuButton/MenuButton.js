@@ -4,22 +4,23 @@ import PropTypes from 'prop-types';
 
 const TitleWrapper = styled.h1`
   white-space: nowrap;
-  font-size: 2.5rem;
-  ${props => (props.isHover ? '{color: pink;  }' : '')};
+  font-size: 2rem;
+  ${props => (props.isSelected ? '{color: pink;  }' : '')};
 `;
 
-const MenuButton = ({ isHover }) => {
+const MenuButton = ({ isSelected, text }) => {
   return (
     <div>
-      <TitleWrapper isHover={isHover}>게시판</TitleWrapper>
+      <TitleWrapper isSelected={isSelected}>{text}</TitleWrapper>
     </div>
   );
 };
 MenuButton.defaultProps = {
-  isHover: false
+  isSelected: false
 };
 MenuButton.propTypes = {
-  isHover: PropTypes.bool
+  isSelected: PropTypes.bool,
+  text: PropTypes.string.isRequired
 };
 
 export default MenuButton;
