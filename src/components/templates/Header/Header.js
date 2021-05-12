@@ -4,6 +4,21 @@ import SELogo from '../../atoms/icons/SELogo';
 import MenuContainer from '../../modules/MenuContainer/MenuContainer';
 import UserMenuContainer from '../../modules/UserMenuContainer/UserMenuContainer';
 
+const Middle = styled.div`
+  flex-grow: 2;
+`;
+const Left = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+  flex-grow: 1;
+`;
+const Right = styled.div`
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+`;
+
 const Container = styled.head`
   display: flex;
   justify-content: space-between;
@@ -11,15 +26,24 @@ const Container = styled.head`
   width: 100%;
   height: 100%;
   max-height: 15rem;
-  border: 1px solid;
 `;
 
 const Header = () => {
   return (
     <Container>
-      <SELogo />
-      <MenuContainer />
-      <UserMenuContainer />
+      <Left
+        onClick={() => {
+          console.log('logo clicked');
+        }}
+      >
+        <SELogo />
+      </Left>
+      <Middle>
+        <MenuContainer />
+      </Middle>
+      <Right>
+        <UserMenuContainer />
+      </Right>
     </Container>
   );
 };

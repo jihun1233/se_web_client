@@ -4,26 +4,31 @@ import Header from '../Header/Header';
 
 const Container = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 1920px;
   height: 3831px;
   padding: 59px 0 0;
-  border: 1px solid;
 `;
-const InnerContainer = styled.div`
+const MainContainer = styled.div`
   width: 100%;
   height: 3831px;
   max-width: 1640px;
-  border: 1px solid yellow;
+`;
+const Footer = styled.footer`
+  background-color: gray;
+  width: 100%;
+  min-height: 10rem;
 `;
 const Main = () => {
   return (
     <Container>
-      <InnerContainer>
+      <MainContainer>
         <Header />
-      </InnerContainer>
+        <p>sss</p>
+      </MainContainer>
+      <Footer />
     </Container>
   );
 };
