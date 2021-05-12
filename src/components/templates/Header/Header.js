@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import SELogo from '../atoms/icons/SELogo';
-import MenuContainer from '../modules/MenuContainer';
-import UserMenuContainer from '../modules/UserMenuContainer';
+import SELogo from '../../atoms/icons/SELogo';
+import MenuContainer from '../../modules/MenuContainer/MenuContainer';
+import UserMenuContainer from '../../modules/UserMenuContainer/UserMenuContainer';
 
 const Container = styled.head`
   display: flex;

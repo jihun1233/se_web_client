@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import MenuModule from './MenuModule';
+import MenuModule from '../MenuModule/MenuModule';
 
 const Container = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   > * {
-    margin: 0 4rem 0 4rem;
+    margin: 1rem 4rem 1rem 4rem;
   }
 `;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Heart from '../atoms/icons/Heart';
+import Heart from '../../atoms/icons/Heart';
 
 const Container = styled.div`
   display: flex;

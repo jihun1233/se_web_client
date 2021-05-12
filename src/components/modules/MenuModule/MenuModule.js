@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import HorizonBar from '../atoms/HorizonBar';
-import MenuButton from '../atoms/MenuButton';
+import TransitionHorizonBar from '../TransitionHorizonBar/TransitionHorizonBar';
+import MenuButton from '../../atoms/MenuButton/MenuButton';
 
 const Container = styled.div`
   display: flex;
@@ -11,21 +11,28 @@ const Container = styled.div`
   flex-wrap: wrap;
   width: 77px;
   height: 100%;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const MenuModule = () => {
+  const [isHover, setIsHover] = useState(false);
   return (
     <Container
       onMouseEnter={() => {
         console.log('enter');
+        setIsHover(true);
       }}
       onMouseLeave={() => {
         console.log('leave');
+        setIsHover(false);
       }}
+      isHover={isHover}
     >
       <div />
-      <MenuButton />
-      <HorizonBar />
+      <MenuButton isHover={isHover} />
+      <TransitionHorizonBar isVisible={isHover} />
     </Container>
   );
 };

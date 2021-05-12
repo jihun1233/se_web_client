@@ -8,5 +8,4 @@ const SELogo = () => {
     </div>
   );
 };
-
 export default SELogo;
