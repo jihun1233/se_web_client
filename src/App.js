@@ -1,14 +1,16 @@
 import React from 'react';
-import './App.css';
-import RoutingTest1 from './RouteingTest/RoutingTest1';
+import { Route } from 'react-router-dom';
+import HeaderContainer from './components/templates/Header/HeaderContainer';
+import LoginPage from './components/templates/LoginPage.js/LoginPage';
+import RegisterPage from './components/templates/RegisterPage.js/RegisterPage';
 
 const App = () => {
   return (
-    <div className="App">
-      <p>Hi, I`&apos;`m se_web_client!</p>
-
-      <RoutingTest1 />
-    </div>
+    <>
+      <Route component={HeaderContainer} path="/" />
+      <Route component={LoginPage} path="/login" />
+      <Route component={RegisterPage} path="/register" />
+    </>
   );
 };
 
