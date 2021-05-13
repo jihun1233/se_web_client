@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const TitleWrapper = styled.h1`
   white-space: nowrap;
-  font-size: 2rem;
+  font-size: 1.5rem;
   ${props => (props.isSelected ? '{color: pink;  }' : '')};
 `;
 

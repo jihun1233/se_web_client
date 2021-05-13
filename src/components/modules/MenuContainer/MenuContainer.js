@@ -28,7 +28,7 @@ const Ul = styled.ul`
   list-style: none;
   > li {
     height: 100%;
-    margin: 1rem 4rem 1rem 4rem;
+    margin: 1rem 2rem 1rem 2rem;
   }
 `;
 const Li = styled.li`

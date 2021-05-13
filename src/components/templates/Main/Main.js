@@ -1,20 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
+import Body from '../Body/Body';
 import Header from '../Header/Header';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   width: 100%;
-  height: 3831px;
   padding: 59px 0 0;
 `;
-const MainContainer = styled.div`
+const HeaderContainer = styled.div`
   width: 100%;
-  height: 3831px;
-  max-width: 1640px;
+  max-width: 960px;
+  margin-bottom: 5rem;
+`;
+const BodyContainer = styled.div`
+  width: 100%;
+  min-height: 50rem;
+  max-width: 960px;
 `;
 const Footer = styled.footer`
   background-color: gray;
@@ -24,10 +28,12 @@ const Footer = styled.footer`
 const Main = () => {
   return (
     <Container>
-      <MainContainer>
+      <HeaderContainer>
         <Header />
-        <p>sss</p>
-      </MainContainer>
+      </HeaderContainer>
+      <BodyContainer>
+        <Body />
+      </BodyContainer>
       <Footer />
     </Container>
   );
