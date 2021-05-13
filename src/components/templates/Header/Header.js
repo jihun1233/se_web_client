@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import SELogo from '../../atoms/icons/SELogo';
+
+import SELogoClickable from '../../modules/icons/SELogoClickable';
 import MenuContainer from '../../modules/MenuContainer/MenuContainer';
 import UserMenuContainer from '../../modules/UserMenuContainer/UserMenuContainer';
 
@@ -31,18 +32,22 @@ const Container = styled.head`
 const Header = () => {
   return (
     <Container>
-      <Left
-        onClick={() => {
-          console.log('logo clicked');
-        }}
-      >
-        <SELogo />
+      <Left>
+        <SELogoClickable
+          onClick={() => {
+            console.log('logo clicked');
+          }}
+        />
       </Left>
       <Middle>
         <MenuContainer />
       </Middle>
       <Right>
-        <UserMenuContainer />
+        <UserMenuContainer
+          onClickHeart={() => {
+            console.log('heart clicked');
+          }}
+        />
       </Right>
     </Container>
   );
