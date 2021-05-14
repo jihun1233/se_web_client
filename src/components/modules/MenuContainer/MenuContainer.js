@@ -20,7 +20,7 @@ const Nav = styled.nav`
     display: block;
   }
 `;
-const Ul = styled.ul`
+const RootUl = styled.ul`
   width: 100%;
   height: 100%;
   display: flex;
@@ -31,11 +31,28 @@ const Ul = styled.ul`
     margin: 1rem 2rem 1rem 2rem;
   }
 `;
+const Ul = styled.ul`
+  width: 10rem;
+
+  list-style: none;
+  background-color: gray;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.5rem;
+`;
 const Li = styled.li`
+  background-color: white;
+  margin: 0.3rem 0 0.3rem 0;
+  height: 5rem;
   width: 100%;
   list-style: none;
+  text-align: center;
   & > ul {
     display: none;
+  }
+  & > ul > li > ul {
+    margin-left: 10rem;
+    margin-top: -5.3rem;
   }
   & > ul:hover,
   &:hover > ul {
@@ -55,7 +72,7 @@ const MenuContainer = ({ menuData }) => {
   };
   return (
     <Nav>
-      <Ul>
+      <RootUl>
         {menuData.map((menu, index) => (
           <Li>
             <MenuModule
@@ -65,15 +82,39 @@ const MenuContainer = ({ menuData }) => {
                 toggle(index);
               }}
             />
-            <ul>
-              <li>
-                <MenuModule text="test" />
-              </li>
-              <li>b</li>
-            </ul>
+            <Ul>
+              <Li>
+                <MenuModule text="first" />
+              </Li>
+              <Li>
+                <MenuModule text="first" />
+                <Ul>
+                  <Li>
+                    <MenuModule text="second" />
+                  </Li>
+                  <Li>
+                    <MenuModule text="second" />
+                  </Li>
+                  <Li>
+                    <MenuModule text="second" />
+                    <Ul>
+                      <Li>
+                        <MenuModule text="third" />
+                      </Li>
+                      <Li>
+                        <MenuModule text="third" />
+                      </Li>
+                      <Li>
+                        <MenuModule text="third" />
+                      </Li>
+                    </Ul>
+                  </Li>
+                </Ul>
+              </Li>
+            </Ul>
           </Li>
         ))}
-      </Ul>
+      </RootUl>
     </Nav>
   );
 };
