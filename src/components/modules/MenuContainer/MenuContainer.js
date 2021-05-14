@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+// import ReactRouterPropTypes from 'react-router-prop-types';
+import { useHistory } from 'react-router-dom';
 import MenuModule from '../MenuModule/MenuModule';
 
 const Nav = styled.nav`
@@ -62,6 +64,7 @@ const Li = styled.li`
 `;
 
 const MenuContainer = ({ menuData }) => {
+  const history = useHistory();
   const [isSelected, setIsSelected] = useState(
     new Array(menuData.length).fill(false)
   );
@@ -70,16 +73,48 @@ const MenuContainer = ({ menuData }) => {
     newSelected[index] = true;
     setIsSelected(newSelected);
   };
+
+  const [menuList, setMenuList] = useState();
+  const fillMenus = dataArray => {
+    if (dataArray === null || dataArray.length === 0) return null;
+
+    return dataArray.map((menu, index) => (
+      <Li>
+        <MenuModule
+          text={menu.nameKor}
+          onClick={() => {
+            console.log(menu);
+            history.push(menu.url);
+            toggle(index);
+            console.log('menumodule.clicked');
+          }}
+        />
+        {menu.child.length > 0 ? <Ul>{fillMenus(menu.child)}</Ul> : ''}
+      </Li>
+    ));
+    // Li로 감싼 메뉴 넣기
+    // child.length > 0 이면 Ul 로 감싼 후 그안에 fillMenus();
+  };
+  const arrangeMenuList = () => {
+    const menus = fillMenus(menuData);
+    setMenuList(menus);
+  };
+  useEffect(() => {
+    arrangeMenuList();
+    console.log(history);
+  }, []);
   return (
     <Nav>
       <RootUl>
-        {menuData.map((menu, index) => (
+        {menuList}
+        {/* {menuData.map((menu, index) => (
           <Li>
             <MenuModule
               text={menu}
               isSelected={isSelected[index]}
               onClick={() => {
                 toggle(index);
+                history.push('/test');
               }}
             />
             <Ul>
@@ -113,13 +148,13 @@ const MenuContainer = ({ menuData }) => {
               </Li>
             </Ul>
           </Li>
-        ))}
+        ))} */}
       </RootUl>
     </Nav>
   );
 };
 MenuContainer.defaultProps = {
-  menuData: ['1번메뉴 슉..슉슉..', '2번메뉴', '3번메뉴', '4번메뉴', '5번메뉴']
+  menuData: []
 };
 MenuContainer.propTypes = {
   menuData: PropTypes.arrayOf([])

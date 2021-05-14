@@ -2,14 +2,38 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { createLogger } from 'redux-logger';
+import createSagaMiddleware from 'redux-saga';
+import { applyMiddleware, compose, createStore } from 'redux';
+import { Provider } from 'react-redux';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import rootReducer, { rootSaga } from './modules/index';
+
+// msw
+if (process.env.REACT_APP_ENV === 'development') {
+  // eslint-disable-next-line global-require
+  const { worker } = require('./mocks/browser');
+  worker.start();
+}
+
+const logger = createLogger();
+const sagaMiddleware = createSagaMiddleware();
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  rootReducer,
+  composeEnhancer(applyMiddleware(logger, sagaMiddleware))
+  // applyMiddleware(logger, sagaMiddleware)
+);
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <App />
+      </Router>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

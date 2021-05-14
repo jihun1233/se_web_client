@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { getMenuList } from '../../../modules/menu';
 import SELogoClickable from '../../modules/icons/SELogoClickable';
 import MenuContainer from '../../modules/MenuContainer/MenuContainer';
 import UserMenuContainer from '../../modules/UserMenuContainer/UserMenuContainer';
 
 const Middle = styled.div`
   flex-grow: 2;
+  overflow: hidden;
 `;
 const Left = styled.div`
   &:hover {
@@ -30,6 +33,15 @@ const Container = styled.header`
 `;
 
 const Header = () => {
+  const menuList = useSelector(state => state.menu.menuList);
+  const dispatch = useDispatch();
+  const getMenuListFromStore = () => dispatch(getMenuList());
+  useEffect(() => {
+    getMenuListFromStore();
+  }, []);
+  useEffect(() => {
+    console.log(menuList);
+  }, [menuList]);
   return (
     <Container>
       <Left>
@@ -40,7 +52,7 @@ const Header = () => {
         />
       </Left>
       <Middle>
-        <MenuContainer />
+        <MenuContainer key={menuList.data} menuData={menuList.data} />
       </Middle>
       <Right>
         <UserMenuContainer
