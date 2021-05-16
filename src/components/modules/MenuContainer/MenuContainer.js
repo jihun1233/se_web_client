@@ -21,6 +21,23 @@ const Nav = styled.nav`
   &:hover ul > li {
     display: block;
   }
+  @keyframes fade-in {
+    from {
+      max-height: 0%;
+    }
+    to {
+      max-height: 100%;
+    }
+  }
+
+  @keyframes fade-out {
+    from {
+      max-height: 100%;
+    }
+    to {
+      max-height: 0%;
+    }
+  }
 `;
 const RootUl = styled.ul`
   width: 100%;
@@ -35,21 +52,23 @@ const RootUl = styled.ul`
 `;
 const Ul = styled.ul`
   width: 10rem;
-
+  height: auto;
   list-style: none;
-  background-color: gray;
+  background-color: black;
   margin-left: auto;
   margin-right: auto;
-  padding: 0.5rem;
+  padding: 1px;
 `;
 const Li = styled.li`
   background-color: white;
-  margin: 0.3rem 0 0.3rem 0;
+  margin: 1px 0 1px 0;
   height: 5rem;
   width: 100%;
   list-style: none;
   text-align: center;
   & > ul {
+    animation: fade-out 0.3s;
+    animation-fill-mode: forwards;
     display: none;
   }
   & > ul > li > ul {
@@ -59,34 +78,39 @@ const Li = styled.li`
   & > ul:hover,
   &:hover > ul {
     display: inherit;
-    position: fixed;
+    position: absolute;
+    animation: fade-in 0.3s;
+    animation-fill-mode: forwards;
   }
 `;
 
 const MenuContainer = ({ menuData }) => {
   const history = useHistory();
-  const [isSelected, setIsSelected] = useState(
-    new Array(menuData.length).fill(false)
-  );
-  const toggle = index => {
-    const newSelected = new Array(isSelected.length).fill(false);
-    newSelected[index] = true;
-    setIsSelected(newSelected);
-  };
+  // const [isSelected, setIsSelected] = useState(
+  //   new Array(menuData.length).fill(false)
+  // );
+  // const toggle = index => {
+  //   const newSelected = new Array(isSelected.length).fill(false);
+  //   newSelected[index] = true;
+  //   setIsSelected(newSelected);
+  // };
 
   const [menuList, setMenuList] = useState();
   const fillMenus = dataArray => {
     if (dataArray === null || dataArray.length === 0) return null;
-
-    return dataArray.map((menu, index) => (
+    const sortedData = [...dataArray].sort((a, b) => {
+      return a.menuOrder - b.menuOrder;
+    });
+    return sortedData.map(menu => (
       <Li>
         <MenuModule
           text={menu.nameKor}
           onClick={() => {
-            console.log(menu);
-            history.push(menu.url);
-            toggle(index);
-            console.log('menumodule.clicked');
+            if (menu.menuType === 'BOARD') {
+              history.push(`/board/${menu.url}`);
+            } else if (menu.menuType === 'REDIRECT') {
+              window.open(menu.url);
+            }
           }}
         />
         {menu.child.length > 0 ? <Ul>{fillMenus(menu.child)}</Ul> : ''}
@@ -105,51 +129,7 @@ const MenuContainer = ({ menuData }) => {
   }, []);
   return (
     <Nav>
-      <RootUl>
-        {menuList}
-        {/* {menuData.map((menu, index) => (
-          <Li>
-            <MenuModule
-              text={menu}
-              isSelected={isSelected[index]}
-              onClick={() => {
-                toggle(index);
-                history.push('/test');
-              }}
-            />
-            <Ul>
-              <Li>
-                <MenuModule text="first" />
-              </Li>
-              <Li>
-                <MenuModule text="first" />
-                <Ul>
-                  <Li>
-                    <MenuModule text="second" />
-                  </Li>
-                  <Li>
-                    <MenuModule text="second" />
-                  </Li>
-                  <Li>
-                    <MenuModule text="second" />
-                    <Ul>
-                      <Li>
-                        <MenuModule text="third" />
-                      </Li>
-                      <Li>
-                        <MenuModule text="third" />
-                      </Li>
-                      <Li>
-                        <MenuModule text="third" />
-                      </Li>
-                    </Ul>
-                  </Li>
-                </Ul>
-              </Li>
-            </Ul>
-          </Li>
-        ))} */}
-      </RootUl>
+      <RootUl>{menuList}</RootUl>
     </Nav>
   );
 };
