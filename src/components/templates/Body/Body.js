@@ -1,10 +1,11 @@
 import React from 'react';
-import DefaultBoard from '../Board/DefaultBoard';
+// import DefaultBoard from '../Board/DefaultBoard';
+import BodyRouter from './BodyRouter';
 
 const Body = () => {
   return (
     <div>
-      <DefaultBoard />
+      <BodyRouter />
     </div>
   );
 };
