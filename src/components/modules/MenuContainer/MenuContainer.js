@@ -107,7 +107,10 @@ const MenuContainer = ({ menuData }) => {
           text={menu.nameKor}
           onClick={() => {
             if (menu.menuType === 'BOARD') {
-              history.push(`/board/${menu.url}`);
+              history.push({
+                pathname: `/board/${menu.url}`
+                // name을 state로 값을 넘기면 이 onclick을 통한 이동은 라우팅되지만 주소로 바로입력시 state전달이안된다 다른방안
+              });
             } else if (menu.menuType === 'REDIRECT') {
               window.open(menu.url);
             }

@@ -15,7 +15,7 @@ const Left = styled.div`
   &:hover {
     cursor: pointer;
   }
-  flex-grow: 1;
+  flex-grow: 0;
 `;
 const Right = styled.div`
   flex-grow: 1;
@@ -48,6 +48,7 @@ const Header = () => {
         <SELogoClickable
           onClick={() => {
             console.log('logo clicked');
+            window.location = '/';
           }}
         />
       </Left>

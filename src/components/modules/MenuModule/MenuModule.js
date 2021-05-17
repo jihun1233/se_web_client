@@ -22,11 +22,9 @@ const MenuModule = ({ isSelected, onClick, text }) => {
   return (
     <Container
       onMouseEnter={() => {
-        console.log('enter');
         setIsHover(true);
       }}
       onMouseLeave={() => {
-        console.log('leave');
         setIsHover(false);
       }}
       isHover={isHover}
