@@ -128,7 +128,6 @@ const MenuContainer = ({ menuData }) => {
   };
   useEffect(() => {
     arrangeMenuList();
-    console.log(history);
   }, []);
   return (
     <Nav>

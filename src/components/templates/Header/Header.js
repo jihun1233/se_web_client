@@ -39,9 +39,7 @@ const Header = () => {
   useEffect(() => {
     getMenuListFromStore();
   }, []);
-  useEffect(() => {
-    console.log(menuList);
-  }, [menuList]);
+
   return (
     <Container>
       <Left>
@@ -59,6 +57,9 @@ const Header = () => {
         <UserMenuContainer
           onClickHeart={() => {
             console.log('heart clicked');
+          }}
+          onClickPerson={() => {
+            console.log('person clicked');
           }}
         />
       </Right>
