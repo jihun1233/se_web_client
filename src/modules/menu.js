@@ -5,7 +5,7 @@ import getMenuListAPI from '../libs/api/menu';
 // 메뉴 리스트 조회 / 성공 / 실패
 const GET_MENU_LIST = 'menu/GET_MENU_LIST';
 const GET_MENU_LIST_SUCCESS = 'menu/GET_MENU_LIST_SUCCESS';
-const GET_MENU_LIST_ERROR = 'menu/GET_MENU_LIST_ERROR';
+const GET_MENU_LIST_ERROR = 'menu/GET_MENU_LIST_FAIL';
 
 export const getMenuList = createAction(GET_MENU_LIST);
 

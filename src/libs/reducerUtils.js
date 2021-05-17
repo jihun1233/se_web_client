@@ -1,7 +1,7 @@
 import { call, put } from 'redux-saga/effects';
 
 export const createRequestSaga = (type, request) => {
-  const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAILURE`];
+  const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAIL`];
   return function* saga(action) {
     try {
       const res = yield call(request, action.payload);

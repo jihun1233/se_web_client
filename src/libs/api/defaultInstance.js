@@ -16,7 +16,7 @@ defaultInstance.defaults.headers['Access-Control-Allow-Headers'] =
 defaultInstance.interceptors.request.use(configInput => {
   const config = configInput;
   const token = localStorage.getItem('token');
-  config.headers['X-AUTH-TOKEN'] = token ? `Bearer ${token}` : '';
+  config.headers['X-AUTH-TOKEN'] = token || '';
   return config;
 });
 

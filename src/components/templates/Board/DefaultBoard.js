@@ -1,12 +1,32 @@
 import React, { useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
+import styled from 'styled-components';
+import { useSelector, useDispatch } from 'react-redux';
 import TableModule from '../../modules/Table/TableModule';
+import { getPostList } from '../../../modules/post';
 
-const DefaultBoard = ({ match, history }) => {
+const Title = styled.h1`
+  text-align: center;
+  margin-bottom: 10rem;
+`;
+const DefaultBoard = ({ match, history, location }) => {
+  const dispatch = useDispatch();
+  const postList = useSelector(state => state.post.postList);
   useEffect(() => {
-    console.log(match, history);
-  });
+    dispatch(
+      getPostList({
+        boardId: match.params.id,
+        direction: null,
+        page: null,
+        size: null
+      })
+    );
+    console.log(postList);
+    console.log(match);
+    console.log(history);
+    console.log(location);
+  }, []);
   // const getBoardDataFromStore = () => {};
   // const renderBoard = () => {};
   // match.param에 메뉴 url
@@ -28,6 +48,7 @@ const DefaultBoard = ({ match, history }) => {
   ];
   return (
     <div>
+      <Title>{match.params.id}</Title>
       <TableModule colgroup={colgroup} theads={theads} tbodies={tbodies} />
     </div>
   );
@@ -35,7 +56,8 @@ const DefaultBoard = ({ match, history }) => {
 DefaultBoard.defaultProps = {};
 DefaultBoard.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
-  history: ReactRouterPropTypes.history.isRequired
+  history: ReactRouterPropTypes.history.isRequired,
+  location: ReactRouterPropTypes.location.isRequired
 };
 
 export default DefaultBoard;
