@@ -7,7 +7,12 @@ const BodyRouter = () => {
   return (
     <div>
       <Switch>
-        <Route path="/board/:id" component={DefaultBoard} />
+        <Route
+          path="/board/:id"
+          render={({ match, location }) => (
+            <DefaultBoard key={location.key} match={match} />
+          )}
+        />
         <Route path="/a">a</Route>
         <Route path="/c">c</Route>
         <Route path="*">page not found</Route>
