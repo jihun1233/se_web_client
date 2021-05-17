@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 import TableModule from '../../modules/Table/TableModule';
 import { getPostList } from '../../../modules/post';
 
@@ -10,9 +11,25 @@ const Title = styled.h1`
   text-align: center;
   margin-bottom: 10rem;
 `;
-const DefaultBoard = ({ match, history, location }) => {
+const Container = styled.div`
+  a {
+    text-decoration: none;
+    color: black;
+  }
+`;
+const DefaultBoard = ({ match }) => {
   const dispatch = useDispatch();
   const postList = useSelector(state => state.post.postList);
+  const colgroup = [5, 50, 20, 15, 5, 5];
+  const theads = [
+    <p>번호</p>,
+    <p>제목</p>,
+    <p>작성자</p>,
+    <p>작성일</p>,
+    <p>답글</p>,
+    <p>조회수</p>
+  ];
+  const [tbodies, setTbodies] = useState([]);
   useEffect(() => {
     dispatch(
       getPostList({
@@ -22,42 +39,38 @@ const DefaultBoard = ({ match, history, location }) => {
         size: null
       })
     );
-    console.log(postList);
-    console.log(match);
-    console.log(history);
-    console.log(location);
   }, []);
-  // const getBoardDataFromStore = () => {};
-  // const renderBoard = () => {};
-  // match.param에 메뉴 url
-  // history는 가지고있다가 게시글 조회할때 board에 post 붙여서 라우팅
-  const colgroup = [20, 60, 10, 10];
-  const theads = [<button type="button">abc</button>, <p>222</p>, 'a', 'b'];
-  const tbodies = [
-    [
-      <p>bbb</p>,
-      <p>
-        bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
-      </p>,
-      <p>bbb</p>,
-      <p>bbb</p>
-    ],
-    [<p>bbb</p>, <p>bbb</p>, <p>bbb</p>, <p>bbb</p>],
-    [<p>bbb</p>, <p>bbb</p>, <p>bbb</p>, <p>bbb</p>],
-    [<p>bbb</p>, <p>bbb</p>, <p>bbb</p>, <p>bbb</p>]
-  ];
+  const arrangeTableData = () => {
+    setTbodies(
+      postList.data.content.map(content => {
+        return [
+          <p>{content.postId}</p>,
+          <Link to={`/post/${content.postId}`}>
+            <p>{content.title}</p>
+          </Link>,
+          <p>{content.nickname}</p>,
+          <p>{content.createAt}</p>,
+          <p>{content.numReply}</p>,
+          <p>{content.views}</p>
+        ];
+      })
+    );
+  };
+  useEffect(() => {
+    arrangeTableData();
+    window.scrollTo(0, 0);
+  }, [postList]);
+
   return (
-    <div>
+    <Container>
       <Title>{match.params.id}</Title>
       <TableModule colgroup={colgroup} theads={theads} tbodies={tbodies} />
-    </div>
+    </Container>
   );
 };
 DefaultBoard.defaultProps = {};
 DefaultBoard.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
-  history: ReactRouterPropTypes.history.isRequired,
-  location: ReactRouterPropTypes.location.isRequired
+  match: ReactRouterPropTypes.match.isRequired
 };
 
 export default DefaultBoard;
