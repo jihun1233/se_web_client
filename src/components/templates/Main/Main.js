@@ -22,6 +22,7 @@ const BodyContainer = styled.div`
   width: 100%;
   min-height: 60vh;
   max-width: 960px;
+  margin-bottom: 10rem;
 `;
 const Footer = styled.footer`
   background-color: gray;

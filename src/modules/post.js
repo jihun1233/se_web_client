@@ -21,7 +21,9 @@ export function* postSaga() {
 }
 const initialState = {
   postList: {
-    data: []
+    data: {
+      content: []
+    }
   },
   postListError: false
 };
@@ -30,11 +32,11 @@ const post = handleActions(
     [GET_POST_LIST]: state => ({ ...state }),
     [GET_POST_LIST_SUCCESS]: (state, action) => ({
       ...state,
-      menuList: action.payload
+      postList: action.payload
     }),
     [GET_POST_LIST_ERROR]: (state, action) => ({
       ...state,
-      menuListError: action.payload
+      postListError: action.payload
     })
   },
   initialState
