@@ -7,5 +7,5 @@ export default {
 const Template = args => < DefaultBoard {...args} />;
 export const Default = Template.bind({});
 Default.args = {
-
+  match: {params: ''}
 };

@@ -26,7 +26,7 @@ const Nav = styled.nav`
       max-height: 0%;
     }
     to {
-      max-height: 100%;
+      max-height: 100vh;
     }
   }
 
@@ -54,7 +54,9 @@ const Ul = styled.ul`
   width: 10rem;
   height: auto;
   list-style: none;
-  background-color: black;
+  background-color: white;
+  box-shadow: 3px 3px 5px 1px lightgray, -1px 3px 3px 1px lightgray;
+  border-radius: 2px;
   margin-left: auto;
   margin-right: auto;
   padding: 1px;
@@ -79,7 +81,7 @@ const Li = styled.li`
   &:hover > ul {
     display: inherit;
     position: absolute;
-    animation: fade-in 0.3s;
+    animation: fade-in 1s;
     animation-fill-mode: forwards;
   }
 `;
