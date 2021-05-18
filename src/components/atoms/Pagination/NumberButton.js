@@ -4,14 +4,19 @@ import styled from 'styled-components';
 
 const Wrapper = styled.p`
   display: inline-block;
-  background-color: #f6f6f6;
+  background-color: ${({ theme }) => theme.colors.hover};
   color: #767676;
   border-radius: 2px;
   padding: 1px 8px;
   text-decoration: none;
-
-  ${props =>
-    props.isSelected ? ' color: #D88700;' : ' &:hover {cursor: pointer}'}
+  &:hover {
+    cursor: pointer;
+  }
+  ${({ isSelected, theme }) =>
+    isSelected
+      ? ` color: white;
+    background-color: ${theme.colors.darkgray};`
+      : ''}
 `;
 const NumberButton = ({ isSelected, text, onClick }) => {
   return (
