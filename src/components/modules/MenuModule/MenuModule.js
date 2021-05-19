@@ -17,7 +17,7 @@ const Container = styled.div`
   }
 `;
 
-const MenuModule = ({ isSelected, onClick, text }) => {
+const MenuModule = ({ onClick, text }) => {
   const [isHover, setIsHover] = useState(false);
   return (
     <Container
@@ -31,18 +31,18 @@ const MenuModule = ({ isSelected, onClick, text }) => {
       onClick={onClick}
     >
       <div />
-      <MenuButton text={text} isSelected={isSelected} />
-      <TransitionHorizonBar isVisible={isSelected} />
+      <MenuButton text={text} isSelected={isHover} />
+      <TransitionHorizonBar isVisible={isHover} />
     </Container>
   );
 };
 MenuModule.defaultProps = {
-  isSelected: false,
+  // isSelected: false,
   onClick: () => {}
 };
 MenuModule.propTypes = {
   text: PropTypes.string.isRequired,
-  isSelected: PropTypes.bool,
+  // isSelected: PropTypes.bool,
   onClick: PropTypes.func
 };
 

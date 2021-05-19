@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 const TitleWrapper = styled.h1`
   white-space: nowrap;
   font-size: 1.5rem;
-  ${props => (props.isSelected ? '{color: pink;  }' : '')};
+  ${props =>
+    props.isSelected ? `{color: ${props.theme.colors.mainColor};  }` : ''};
 `;
 
 const MenuButton = ({ isSelected, text }) => {

@@ -9,6 +9,8 @@ const Wrapper = styled.p`
   border-radius: 2px;
   padding: 1px 8px;
   text-decoration: none;
+  font-size: 1.5rem;
+
   &:hover {
     cursor: pointer;
   }

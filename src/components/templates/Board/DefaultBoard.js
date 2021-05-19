@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import TableModule from '../../modules/Table/TableModule';
 import { getPostList } from '../../../modules/post';
+import NumberButtonGroup from '../../modules/Pagination/NumberButtonGroup';
 
 const Title = styled.h1`
   text-align: center;
@@ -16,6 +17,12 @@ const Container = styled.div`
     text-decoration: none;
     color: black;
   }
+`;
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem 0;
 `;
 const DefaultBoard = ({ match }) => {
   const dispatch = useDispatch();
@@ -30,13 +37,18 @@ const DefaultBoard = ({ match }) => {
     <p>조회수</p>
   ];
   const [tbodies, setTbodies] = useState([]);
+  const [pageData, setPageData] = useState({
+    nowPage: 0,
+    maxPage: 100
+  });
+
   useEffect(() => {
     dispatch(
       getPostList({
-        boardId: match.params.id,
-        direction: null,
-        page: null,
-        size: null
+        boardId: match.params.boardId,
+        direction: match.params.direction,
+        page: match.params.page || 1,
+        size: match.params.size
       })
     );
   }, []);
@@ -56,15 +68,43 @@ const DefaultBoard = ({ match }) => {
       })
     );
   };
+  const arrangePagination = () => {
+    // const nowPage = postList.data.pageable.pageNumber;
+    // const maxPage = postList.data.totalPages;
+
+    setPageData({
+      nowPage: postList.data.pageable.pageNumber,
+      maxPage: postList.data.totalPages
+    });
+  };
   useEffect(() => {
     arrangeTableData();
+    arrangePagination();
     window.scrollTo(0, 0);
+    console.log(postList);
   }, [postList]);
 
   return (
     <Container>
-      <Title>{match.params.id}</Title>
+      <Title>{`${match.params.boardId}, Page: ${pageData.nowPage}`}</Title>
       <TableModule colgroup={colgroup} theads={theads} tbodies={tbodies} />
+      <PaginationContainer>
+        <NumberButtonGroup
+          key={pageData}
+          maxPage={pageData.maxPage}
+          nowPage={pageData.nowPage}
+          onClick={index => {
+            dispatch(
+              getPostList({
+                boardId: match.params.boardId,
+                direction: null,
+                page: index,
+                size: null
+              })
+            );
+          }}
+        />
+      </PaginationContainer>
     </Container>
   );
 };

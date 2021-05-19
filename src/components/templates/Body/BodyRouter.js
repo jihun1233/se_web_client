@@ -8,9 +8,15 @@ const BodyRouter = () => {
     <div>
       <Switch>
         <Route
-          path="/board/:id"
-          render={({ match, location }) => (
-            <DefaultBoard key={location.key} match={match} />
+          path="/board/:boardId?/:direction?/:page?/:size?"
+          render={({ match, location, history }) => (
+            <DefaultBoard key={location.key} match={match} history={history} />
+          )}
+        />
+        <Route
+          path="/post/:boardId?/:direction?/:page?/:size?"
+          render={({ match, location, history }) => (
+            <DefaultBoard key={location.key} match={match} history={history} />
           )}
         />
         <Route path="/a">a</Route>
