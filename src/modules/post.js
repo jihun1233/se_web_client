@@ -22,7 +22,12 @@ export function* postSaga() {
 const initialState = {
   postList: {
     data: {
-      content: []
+      content: [],
+      pageable: {
+        pageNumber: 1,
+        pageSize: 50
+      },
+      totalPages: 100
     }
   },
   postListError: false

@@ -14,7 +14,7 @@ const handlers = [
   // postList 게시판의 게시글 목록 조회
   rest.get(`${baseUrl}/post`, (req,res,ctx)=>{
     console.log(req)
-    return res(ctx.status(200), ctx.json(postListMock(req.url.searchParams.get('boardId'))));
+    return res(ctx.status(200), ctx.json(postListMock({boardId:req.url.searchParams.get('boardId'), direction:req.url.searchParams.get('direction'), page:req.url.searchParams.get('page'), size:req.url.searchParams.get('size')})));
   })
 ];
 
