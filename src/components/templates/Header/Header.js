@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { useSelector, useDispatch } from 'react-redux';
+import Popover from '@material-ui/core/Popover';
 import { getMenuList } from '../../../modules/menu';
 import SELogoClickable from '../../modules/icons/SELogoClickable';
 import MenuContainer from '../../modules/MenuContainer/MenuContainer';
 import UserMenuContainer from '../../modules/UserMenuContainer/UserMenuContainer';
+import UserPopover from './UserPopover';
 
 const Middle = styled.div`
   flex-grow: 2;
@@ -36,6 +38,19 @@ const Header = () => {
   const menuList = useSelector(state => state.menu.menuList);
   const dispatch = useDispatch();
   const getMenuListFromStore = () => dispatch(getMenuList());
+  const [anchorEl, setAnchorEl] = useState(null);
+
+  const handleClick = event => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   useEffect(() => {
     getMenuListFromStore();
   }, []);
@@ -58,11 +73,25 @@ const Header = () => {
           onClickHeart={() => {
             console.log('heart clicked');
           }}
-          onClickPerson={() => {
-            console.log('person clicked');
-          }}
+          onClickPerson={handleClick}
         />
       </Right>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center'
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'center'
+        }}
+      >
+        <UserPopover />
+      </Popover>
     </Container>
   );
 };
