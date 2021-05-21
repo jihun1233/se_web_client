@@ -1,16 +1,16 @@
-// HorizonBar.stories.js
+// TransitionHorizonBar.stories.js
 
 import React from 'react';
-import HorizonBar from './HorizonBar';
+import TransitionHorizonBar from './TransitionHorizonBar';
 
 export default {
-  title: 'atoms/HorizonBar',
-  component: HorizonBar
+  title: 'atoms/TransitionHorizonBar',
+  component: TransitionHorizonBar
 };
 
 // 👇 We create a “template” of how args map to rendering
 // eslint-disable-next-line react/jsx-props-no-spreading
-const Template = args => <HorizonBar {...args} />;
+const Template = args => <TransitionHorizonBar {...args} />;
 
 // 👇 Each story then reuses that template
 export const Primary = Template.bind({});
