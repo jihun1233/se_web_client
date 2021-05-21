@@ -1,6 +1,6 @@
 import defaultInstance from './defaultInstance';
 
-const getPostListAPI = async ({ boardId, direction, page, size }) => {
+export const getPostListAPI = async ({ boardId, direction, page, size }) => {
   const response = await defaultInstance.get('/post', {
     params: {
       boardId,
@@ -12,4 +12,7 @@ const getPostListAPI = async ({ boardId, direction, page, size }) => {
   return response;
 };
 
-export default getPostListAPI;
+export const getPostByIdAPI = async ({ postId }) => {
+  const response = await defaultInstance.get(`/post/${postId}`);
+  return response;
+};

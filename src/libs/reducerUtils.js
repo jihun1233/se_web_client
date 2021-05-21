@@ -20,7 +20,7 @@ export const createRequestSaga = (type, request) => {
 };
 
 export const createRequestSagaById = (type, request) => {
-  const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAILURE`];
+  const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAIL`];
   return function* saga(action) {
     const id = action.meta;
     try {
