@@ -3,10 +3,21 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const ThCustom = styled.th``;
-const Th = ({ children }) => {
-  return <ThCustom>{children}</ThCustom>;
+const Th = ({ children, colSpan, rowSpan }) => {
+  return (
+    <ThCustom colSpan={colSpan} rowSpan={rowSpan}>
+      {children}
+    </ThCustom>
+  );
 };
-
-Th.propTypes = { children: PropTypes.arrayOf([]).isRequired };
+Th.defaultProps = {
+  colSpan: 1,
+  rowSpan: 1
+};
+Th.propTypes = {
+  children: PropTypes.arrayOf([]).isRequired,
+  colSpan: PropTypes.number,
+  rowSpan: PropTypes.number
+};
 
 export default Th;

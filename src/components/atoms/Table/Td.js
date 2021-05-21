@@ -9,12 +9,21 @@ const TdCustom = styled.td`
     content: 'a';
   }
 `;
-const Td = ({ children }) => {
-  return <TdCustom>{children}</TdCustom>;
+const Td = ({ children, colSpan, rowSpan }) => {
+  return (
+    <TdCustom colSpan={colSpan} rowSpan={rowSpan}>
+      {children}
+    </TdCustom>
+  );
 };
-
+Td.defaultProps = {
+  colSpan: 1,
+  rowSpan: 1
+};
 Td.propTypes = {
-  children: PropTypes.arrayOf([]).isRequired
+  children: PropTypes.arrayOf([]).isRequired,
+  colSpan: PropTypes.number,
+  rowSpan: PropTypes.number
 };
 
 export default Td;
