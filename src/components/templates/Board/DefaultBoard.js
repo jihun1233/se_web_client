@@ -4,9 +4,9 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import TableModule from '../../modules/Table/TableModule';
 import { getPostList } from '../../../modules/post';
 import NumberButtonGroup from '../../modules/Pagination/NumberButtonGroup';
+import Table from '../../modules/Table/Table';
 
 const Title = styled.h1`
   text-align: center;
@@ -23,6 +23,11 @@ const PaginationContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: 3rem 0;
+`;
+const ButtonContainer = styled.div`
+  margin-top: 3rem;
+  display: flex;
+  justify-content: flex-end;
 `;
 const DefaultBoard = ({ match }) => {
   const dispatch = useDispatch();
@@ -46,9 +51,9 @@ const DefaultBoard = ({ match }) => {
     dispatch(
       getPostList({
         boardId: match.params.boardId,
-        direction: match.params.direction,
+        direction: match.params.direction || 'ASC',
         page: match.params.page || 1,
-        size: match.params.size
+        size: match.params.size || 30
       })
     );
   }, []);
@@ -84,25 +89,31 @@ const DefaultBoard = ({ match }) => {
     console.log(postList);
   }, [postList]);
 
+  const onPaginationClick = index => {
+    dispatch(
+      getPostList({
+        boardId: match.params.boardId,
+        direction: null,
+        page: index,
+        size: null
+      })
+    );
+  };
   return (
     <Container>
       <Title>{`${match.params.boardId}, Page: ${pageData.nowPage}`}</Title>
-      <TableModule colgroup={colgroup} theads={theads} tbodies={tbodies} />
+      <Table colgroup={colgroup} theads={theads} tbodies={tbodies} />
+      <ButtonContainer>
+        <Link to={`/writepost/${match.params.boardId}`}>
+          <button type="button">게시글작성</button>
+        </Link>
+      </ButtonContainer>
       <PaginationContainer>
         <NumberButtonGroup
           key={pageData}
           maxPage={pageData.maxPage}
           nowPage={pageData.nowPage}
-          onClick={index => {
-            dispatch(
-              getPostList({
-                boardId: match.params.boardId,
-                direction: null,
-                page: index,
-                size: null
-              })
-            );
-          }}
+          onClick={onPaginationClick}
         />
       </PaginationContainer>
     </Container>
