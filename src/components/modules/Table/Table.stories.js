@@ -2,7 +2,7 @@ import React from 'react';
 import Table from './Table';
 export default {
   component: Table,
-  title: 'default/Table'
+  title: 'modules/Table'
 };
 const Template = args => < Table {...args} />;
 export const Default = Template.bind({});

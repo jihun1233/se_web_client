@@ -1,19 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Thead from './Thead';
-import Tbody from './Tbody';
-import Tr from './Tr';
-import Td from './Td';
-import Th from './Th';
+import Thead from '../../atoms/Table/Thead';
+import Tbody from '../../atoms/Table/Tbody';
+import Tr from '../../atoms/Table/Tr';
+import Td from '../../atoms/Table/Td';
+import Th from '../../atoms/Table/Th';
 
 const TableCustom = styled.table`
   width: 100%;
-  border-top: 1px solid;
+  border-top: 3px #66747e solid;
   border-collapse: collapse;
   text-align: center;
   vertical-align: center;
   table-layout: fixed;
+  & > th,
+  td {
+    border-bottom: 2px #a6a6a6 solid;
+  }
+  & > thead > tr {
+    border-bottom: 2px #a6a6a6 solid;
+  }
   ${props =>
     props.hover
       ? `tbody > tr:hover{
