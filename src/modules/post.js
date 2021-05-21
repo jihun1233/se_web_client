@@ -1,18 +1,27 @@
 import { createAction, handleActions } from 'redux-actions';
 import { takeLatest } from 'redux-saga/effects';
 import { createRequestSaga, createRequestSagaById } from '../libs/reducerUtils';
-import { getPostListAPI, getPostByIdAPI } from '../libs/api/post';
+import {
+  getPostListAPI,
+  getPostByIdAPI,
+  createPostAPI
+} from '../libs/api/post';
 
 // import getMenuListAPI from '../libs/api/menu';
 // 게시판의 게시글 리스트 조회 / 성공 / 실패
-const GET_POST_LIST = 'board/GET_POST_LIST';
-const GET_POST_LIST_SUCCESS = 'board/GET_POST_LIST_SUCCESS';
-const GET_POST_LIST_FAIL = 'board/GET_POST_LIST_FAIL';
+const GET_POST_LIST = 'post/GET_POST_LIST';
+const GET_POST_LIST_SUCCESS = 'post/GET_POST_LIST_SUCCESS';
+const GET_POST_LIST_FAIL = 'post/GET_POST_LIST_FAIL';
 
 // 게시글 id로 조회
-const GET_POST_BY_ID = 'board/GET_POST_BY_ID';
-const GET_POST_BY_ID_SUCCESS = 'board/GET_POST_BY_ID_SUCCESS';
-const GET_POST_BY_ID_FAIL = 'board/GET_POST_BY_ID_FAIL';
+const GET_POST_BY_ID = 'post/GET_POST_BY_ID';
+const GET_POST_BY_ID_SUCCESS = 'post/GET_POST_BY_ID_SUCCESS';
+const GET_POST_BY_ID_FAIL = 'post/GET_POST_BY_ID_FAIL';
+
+// 게시글 등록
+const CREATE_POST = 'post/CREATE_POST';
+const CREATE_POST_SUCCESS = 'post/CREATE_POST_SUCCESS';
+const CREATE_POST_FAIL = 'post/CREATE_POST_FAIL';
 
 export const getPostList = createAction(
   GET_POST_LIST,
@@ -22,12 +31,26 @@ export const getPostById = createAction(GET_POST_BY_ID, ({ postId }) => ({
   postId
 }));
 
+export const createPost = createAction(
+  CREATE_POST,
+  ({ anonymous, boardId, isNotice, isSecret, postContent, tagList }) => ({
+    anonymous,
+    boardId,
+    isNotice,
+    isSecret,
+    postContent,
+    tagList
+  })
+);
+
 const getPostListSaga = createRequestSaga(GET_POST_LIST, getPostListAPI);
 const getPostByIdSaga = createRequestSagaById(GET_POST_BY_ID, getPostByIdAPI);
+const createPostSaga = createRequestSaga(CREATE_POST, createPostAPI);
 
 export function* postSaga() {
   yield takeLatest(GET_POST_LIST, getPostListSaga);
   yield takeLatest(GET_POST_BY_ID, getPostByIdSaga);
+  yield takeLatest(CREATE_POST, createPostSaga);
 }
 const initialState = {
   postList: {
@@ -50,7 +73,9 @@ const initialState = {
       tags: []
     }
   },
-  postByIdError: false
+  postByIdError: false,
+  createPost: null,
+  createPostError: false
 };
 const post = handleActions(
   {
@@ -71,6 +96,15 @@ const post = handleActions(
     [GET_POST_BY_ID_FAIL]: (state, action) => ({
       ...state,
       postByIdError: action.payload
+    }),
+    [CREATE_POST]: state => state,
+    [CREATE_POST_SUCCESS]: (state, action) => ({
+      ...state,
+      createPost: action.payload
+    }),
+    [CREATE_POST_FAIL]: (state, action) => ({
+      ...state,
+      createPostError: action.payload
     })
   },
   initialState
