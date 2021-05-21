@@ -100,7 +100,7 @@ for (let index = 0; index < size; index++) {
                                 nameEng: `Menu${index+size * 11} Name in Eng`,
                                 nameKor: `Menu${index+size * 11}`,
                                 menuType: "REDIRECT",
-                                url: `menu${index+size * 11}`
+                                url: `https://comic.naver.com/webtoon/list.nhn?titleId=650305&weekday=sat`
                             }
                         ],
                         description: `${index+size}'s child Menu${index+size * 6} Description`,

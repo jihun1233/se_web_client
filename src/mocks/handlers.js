@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { menuListMock } from './menuMock';
-import postListMock from './postMock';
+import {postList, postById} from './postMock';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 const handlers = [
@@ -14,8 +14,12 @@ const handlers = [
   // postList 게시판의 게시글 목록 조회
   rest.get(`${baseUrl}/post`, (req,res,ctx)=>{
     console.log(req)
-    return res(ctx.status(200), ctx.json(postListMock({boardId:req.url.searchParams.get('boardId'), direction:req.url.searchParams.get('direction'), page:req.url.searchParams.get('page'), size:req.url.searchParams.get('size')})));
+    return res(ctx.status(200), ctx.json(postList({boardId:req.url.searchParams.get('boardId'), direction:req.url.searchParams.get('direction'), page:req.url.searchParams.get('page'), size:req.url.searchParams.get('size')})));
+  }),
+  rest.get(`${baseUrl}/post/:id`, (req,res,ctx)=>{
+    return res(ctx.status(200), ctx.json(postById(req.url.searchParams.get('postId'))))
   })
+
 ];
 
 export default handlers;
