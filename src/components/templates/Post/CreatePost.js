@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import TableWithSpan from '../../modules/Table/TableWithSpan';
-import { getPostById } from '../../../modules/post';
+import { createPost } from '../../../modules/post';
 import Editor from '../../modules/CKEditor/Editor';
+import TextField from '../../atoms/TextField/TextField';
 
 const BoardTitle = styled.h1`
   text-align: center;
@@ -21,22 +22,36 @@ const ButtonContainer = styled.div`
   justify-content: flex-end;
 `;
 const ContentText = styled.div``;
-const CreatePost = ({ match, history, location }) => {
+const CreatePost = ({ match }) => {
   const dispatch = useDispatch();
-  const postData = useSelector(state => state.post.postById.data);
-  const getPostFromStore = postId => {
-    dispatch(getPostById({ postId }));
+
+  const [title, setTitle] = useState();
+  const [content, setContent] = useState();
+
+  const titleOnChange = e => {
+    setTitle(e.target.value);
   };
-  console.log(match, history, location);
+  const contentOnChange = value => {
+    setContent(value);
+  };
+  const createPostDispatch = () => {
+    dispatch(
+      createPost({
+        boardId: match.params.boardId,
+        postContent: { text: content, title }
+      })
+    );
+  };
+
   const colgroup = [10, 10, 10, 10, 10, 10, 40];
   const theads = [
     {
-      data: (
-        <h1 style={{ fontSize: `1.5rem`, fontWeight: 'normal' }}>
-          {postData.postContent.title}
-        </h1>
-      ),
-      colSpan: 7
+      data: <h1 style={{ fontSize: `1.5rem`, fontWeight: 'normal' }}>제목</h1>,
+      colSpan: 1
+    },
+    {
+      data: <TextField value={title} onChange={titleOnChange} />,
+      colSpan: 6
     }
   ];
   const [tbodies, setTbodies] = useState([]);
@@ -45,49 +60,36 @@ const CreatePost = ({ match, history, location }) => {
       [
         { isTh: true, data: <p>태그</p> },
         {
-          data: postData.tags ? postData.tags.map(tag => <p>{tag}</p>) : ''
+          data: ''
         },
         { data: '', colSpan: 5 }
-      ],
-      [
-        { isTh: true, data: <p>작성자</p> },
-        {
-          data: <p>{postData.accountNickname || postData.anonymousNickname}</p>
-        },
-        { isTh: true, data: <p>조회수</p> },
-        { data: <p>{postData.views}</p> },
-        { isTh: true, data: <p>작성일</p> },
-        { data: <p>{postData.createAt}</p> },
-        { data: '' }
       ]
     ]);
   };
   useEffect(() => {
     window.scrollTo(0, 0);
-    getPostFromStore(match.params.postId);
   }, []);
   useEffect(() => {
-    console.log(postData);
     arrangePost();
-  }, [postData]);
+  }, []);
   return (
     <Container>
-      <BoardTitle>{`게시판: ${postData.boardId}`}</BoardTitle>
+      <BoardTitle>{`게시판: ${match.params.boardId}`}</BoardTitle>
       <TableWithSpan colgroup={colgroup} theads={theads} tbodies={tbodies} />
       <ContentText>
-        <Editor />
+        <Editor value={content} onChange={contentOnChange} />
       </ContentText>
       <ButtonContainer>
-        <button type="button">완료</button>
+        <button type="button" onClick={createPostDispatch}>
+          완료
+        </button>
       </ButtonContainer>
     </Container>
   );
 };
 
 CreatePost.propTypes = {
-  match: ReactRouterPropTypes.match.isRequired,
-  history: ReactRouterPropTypes.history.isRequired,
-  location: ReactRouterPropTypes.location.isRequired
+  match: ReactRouterPropTypes.match.isRequired
 };
 
 export default CreatePost;
