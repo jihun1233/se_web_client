@@ -42,6 +42,16 @@ export const createPost = createAction(
     tagList
   })
 );
+/**
+ * anonymous: {anonymousNickname: '', anonymousPassword: ''}
+ * postContent: {
+ *  text: '',
+ *  title: ''
+ * }
+ * tagList: [
+ *  { tagId : 1}
+ * ]
+ */
 
 const getPostListSaga = createRequestSaga(GET_POST_LIST, getPostListAPI);
 const getPostByIdSaga = createRequestSagaById(GET_POST_BY_ID, getPostByIdAPI);
