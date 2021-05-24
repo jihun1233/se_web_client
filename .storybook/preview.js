@@ -9,6 +9,7 @@ import rootReducer, {rootSaga} from '../src/modules/index';
 import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
 
+import { StylesProvider } from '@material-ui/core';
 import StoryRouter from 'storybook-react-router';
 
 
@@ -45,7 +46,9 @@ export const decorators = [
   (Story) => (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Story />
+        <StylesProvider injectFirst>
+          <Story />
+        </StylesProvider>
       </ThemeProvider>
   </Provider>
   )
