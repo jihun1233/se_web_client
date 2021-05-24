@@ -38,7 +38,10 @@ const CreatePost = ({ match }) => {
     dispatch(
       createPost({
         boardId: match.params.boardId,
-        postContent: { text: content, title }
+        postContent: { text: content, title },
+        isNotice: 'NORMAL',
+        isSecret: 'NORMAL',
+        tagList: []
       })
     );
   };
@@ -50,7 +53,14 @@ const CreatePost = ({ match }) => {
       colSpan: 1
     },
     {
-      data: <TextField value={title} onChange={titleOnChange} />,
+      data: (
+        <TextField
+          value={title}
+          onChange={titleOnChange}
+          grow
+          fontSize="1.5rem"
+        />
+      ),
       colSpan: 6
     }
   ];
