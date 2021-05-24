@@ -1,18 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
+import Login from '../Login/Login';
+import { logout } from '../../../modules/auth';
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
+const Container = styled.div``;
 const UserPopover = () => {
+  const dispatch = useDispatch();
+  const logoutDispatch = () => {
+    dispatch(logout());
+  };
+  const [token] = useState(localStorage.getItem('token'));
+
   return (
     <Container>
-      <Button>a</Button>
-      <Button>a</Button>
-      <Button>a</Button>
+      {token ? <Button onClick={logoutDispatch}>로그아웃</Button> : <Login />}
     </Container>
   );
 };
