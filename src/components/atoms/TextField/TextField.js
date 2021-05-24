@@ -4,20 +4,40 @@ import MUTextField from '@material-ui/core/TextField';
 import styled from 'styled-components';
 
 const CustomTextField = styled(MUTextField)`
-  display: flex;
-
-  flex-grow: 1;
+  ${props => (props.grow ? 'width : 100%;' : '')}
   input {
-    font-size: 1.5rem;
+    font-size: ${props => props.fontSize};
   }
 `;
-const TextField = ({ value, onChange }) => {
-  return <CustomTextField value={value} onChange={onChange} />;
+const TextField = ({ type, name, value, onChange, grow, fontSize, label }) => {
+  return (
+    <CustomTextField
+      type={type}
+      name={name}
+      value={value}
+      onChange={onChange}
+      grow={grow}
+      fontSize={fontSize}
+      label={label}
+    />
+  );
 };
 
+TextField.defaultProps = {
+  type: 'text',
+  name: '',
+  grow: false,
+  fontSize: '1rem',
+  label: ''
+};
 TextField.propTypes = {
+  type: PropTypes.string,
+  name: PropTypes.string,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  grow: PropTypes.bool,
+  fontSize: PropTypes.string,
+  label: PropTypes.string
 };
 
 export default TextField;
