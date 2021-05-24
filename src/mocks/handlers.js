@@ -1,6 +1,6 @@
 import { rest } from 'msw';
 import { menuListMock } from './menuMock';
-import {postList, postById} from './postMock';
+import {postList, postById, createPost} from './postMock';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 const handlers = [
@@ -16,8 +16,13 @@ const handlers = [
     console.log(req)
     return res(ctx.status(200), ctx.json(postList({boardId:req.url.searchParams.get('boardId'), direction:req.url.searchParams.get('direction'), page:req.url.searchParams.get('page'), size:req.url.searchParams.get('size')})));
   }),
+  // 게시글 id로 조회
   rest.get(`${baseUrl}/post/:id`, (req,res,ctx)=>{
     return res(ctx.status(200), ctx.json(postById(req.url.searchParams.get('postId'))))
+  }),
+  rest.post(`${baseUrl}/post`, (req,res,ctx)=>{
+    console.log(req);
+    return res(ctx.status(200), ctx.json(createPost()))
   })
 
 ];

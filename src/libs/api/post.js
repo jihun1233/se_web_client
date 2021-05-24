@@ -16,3 +16,22 @@ export const getPostByIdAPI = async ({ postId }) => {
   const response = await defaultInstance.get(`/post/${postId}`);
   return response;
 };
+
+export const createPostAPI = async ({
+  anonymous,
+  boardId,
+  isNotice,
+  isSecret,
+  postContent,
+  tagList
+}) => {
+  const response = await defaultInstance.post(`/post`, {
+    anonymous,
+    boardId,
+    isNotice,
+    isSecret,
+    postContent,
+    tagList
+  });
+  return response;
+};

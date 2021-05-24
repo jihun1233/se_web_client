@@ -80,3 +80,10 @@ export const postById = (postId) => {
     }
   }
 }
+let index = 0;
+
+export const createPost =()=>({
+  "code": 201,
+  "message": `성공적으로 등록되었습니다`,
+  "data": index++
+})

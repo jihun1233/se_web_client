@@ -1,5 +1,5 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ const Container = styled.div`
     min-height: 20rem;0
   }
 `;
-const Editor = () => {
+const Editor = ({ value, onChange }) => {
   return (
     <Container>
       <CKEditor
@@ -22,6 +22,7 @@ const Editor = () => {
         }}
         onChange={(event, editor) => {
           const data = editor.getData();
+          onChange(data);
           console.log({ event, editor, data });
         }}
         onBlur={(event, editor) => {
@@ -30,11 +31,15 @@ const Editor = () => {
         onFocus={(event, editor) => {
           console.log('Focus.', editor);
         }}
+        data={value}
       />
     </Container>
   );
 };
 
-Editor.propTypes = {};
+Editor.propTypes = {
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+};
 
 export default Editor;

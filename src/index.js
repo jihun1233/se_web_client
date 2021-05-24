@@ -7,6 +7,7 @@ import createSagaMiddleware from 'redux-saga';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
+import { StylesProvider } from '@material-ui/core';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import rootReducer, { rootSaga } from './modules/index';
@@ -33,9 +34,11 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Router>
-          <App />
-        </Router>
+        <StylesProvider injectFirst>
+          <Router>
+            <App />
+          </Router>
+        </StylesProvider>
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,

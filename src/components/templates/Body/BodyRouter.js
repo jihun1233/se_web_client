@@ -22,7 +22,7 @@ const BodyRouter = () => {
           )}
         />
         <Route
-          path="/writepost/:postId?"
+          path="/writepost/:boardId?"
           render={({ match, location, history }) => (
             <CreatePost key={location.key} match={match} history={history} />
           )}
