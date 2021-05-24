@@ -1,7 +1,7 @@
 import { rest } from 'msw';
 import { menuListMock } from './menuMock';
 import {postList, postById, createPost} from './postMock';
-
+import {loginMock} from './authMock'
 const baseUrl = process.env.REACT_APP_API_URL;
 const handlers = [
   rest.post('/test', (req, res, ctx) => {
@@ -21,9 +21,14 @@ const handlers = [
     return res(ctx.status(200), ctx.json(postById(req.url.searchParams.get('postId'))))
   }),
   rest.post(`${baseUrl}/post`, (req,res,ctx)=>{
-    console.log(req);
     return res(ctx.status(200), ctx.json(createPost()))
+  }),
+  // AUTH
+  // 로그인
+  rest.post(`${baseUrl}/signin`, (req,res,ctx)=>{
+    return res(ctx.status(200), ctx.json(loginMock()));
   })
+
 
 ];
 

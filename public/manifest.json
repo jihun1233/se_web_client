@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SE 게시판",
+  "name": "Software Engineering Board",
   "icons": [
     {
       "src": "favicon.ico",
