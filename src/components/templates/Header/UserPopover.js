@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
-// import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import UserMenu from '../UserMenu/UserMenu';
 import Login from '../Login/Login';
-import { logout } from '../../../modules/auth';
 
 const Container = styled.div``;
-const UserPopover = () => {
-  const dispatch = useDispatch();
-  const logoutDispatch = () => {
-    dispatch(logout());
-  };
+const UserPopover = ({ onClose }) => {
   const [token] = useState(localStorage.getItem('token'));
 
   return (
     <Container>
-      {token ? <Button onClick={logoutDispatch}>로그아웃</Button> : <Login />}
+      {token ? <UserMenu onClose={onClose} /> : <Login onClose={onClose} />}
     </Container>
   );
 };
-
-UserPopover.propTypes = {};
+UserPopover.defaultProps = {
+  onClose: () => {}
+};
+UserPopover.propTypes = {
+  onClose: PropTypes.func
+};
 
 export default UserPopover;

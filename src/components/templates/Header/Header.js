@@ -90,7 +90,7 @@ const Header = () => {
           horizontal: 'center'
         }}
       >
-        <UserPopover />
+        <UserPopover onClose={handleClose} />
       </Popover>
     </Container>
   );
