@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import TextField from '../../atoms/TextField/TextField';
@@ -20,7 +20,7 @@ const ButtonContainer = styled.div`
   margin-top: 2rem;
 `;
 
-const Login = () => {
+const Login = ({ onClose }) => {
   const dispatch = useDispatch();
   const loginDataFromStore = useSelector(state => state.auth.login);
 
@@ -51,12 +51,21 @@ const Login = () => {
         fontSize="1.5rem"
       />
       <ButtonContainer>
-        <Button onClick={loginDispatch}>로그인</Button>
+        <Button
+          onClick={() => {
+            loginDispatch();
+            onClose();
+          }}
+        >
+          로그인
+        </Button>
       </ButtonContainer>
     </Container>
   );
 };
-
-Login.propTypes = {};
+Login.defaultProps = {
+  onClose: () => {}
+};
+Login.propTypes = { onClose: PropTypes.func };
 
 export default Login;

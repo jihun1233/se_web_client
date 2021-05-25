@@ -16,7 +16,9 @@ const Container = styled.article`
   margin: 5rem 0;
 `;
 
-const ContentText = styled.div``;
+const ContentText = styled.div`
+  padding: 2rem;
+`;
 const ReadPost = ({ match, history, location }) => {
   const dispatch = useDispatch();
   const postData = useSelector(state => state.post.postById.data);
@@ -53,7 +55,7 @@ const ReadPost = ({ match, history, location }) => {
         { isth: true, data: <p>조회수</p> },
         { data: <p>{postData.views}</p> },
         { isTh: true, data: <p>작성일</p> },
-        { data: <p>{postData.createAt}</p> },
+        { data: <p>{postData.createdAt}</p> },
         { data: '' }
       ]
     ]);
