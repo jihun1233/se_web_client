@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import TableWithSpan from '../../modules/Table/TableWithSpan';
 import { getPostById } from '../../../modules/post';
+import TagContainer from '../../modules/TagContainer/TagContainer';
 
 const BoardTitle = styled.h1`
   text-align: center;
@@ -26,7 +27,7 @@ const ReadPost = ({ match, history, location }) => {
     dispatch(getPostById({ postId }));
   };
   console.log(match, history, location);
-  const colgroup = [10, 10, 10, 10, 10, 10, 40];
+  const colgroup = [10, 20, 10, 10, 10, 20, 20];
   const theads = [
     {
       data: (
@@ -38,14 +39,23 @@ const ReadPost = ({ match, history, location }) => {
     }
   ];
   const [tbodies, setTbodies] = useState([]);
+  const dateToString = dateArray => {
+    const [year, month, date, hour, minute] = dateArray;
+    const dateString = `${year}-${month}-${date} ${hour}:${minute}`;
+    return dateString;
+  };
   const arrangePost = () => {
     setTbodies([
       [
         { isTh: true, data: <p>태그</p> },
         {
-          data: postData.tags ? postData.tags.map(tag => <p>{tag}</p>) : ''
-        },
-        { data: '', colSpan: 5 }
+          data: postData.tags ? (
+            <TagContainer tagData={postData.tags} justify="flex-start" />
+          ) : (
+            ''
+          ),
+          colSpan: 6
+        }
       ],
       [
         { isTh: true, data: <p>작성자</p> },
@@ -55,7 +65,13 @@ const ReadPost = ({ match, history, location }) => {
         { isth: true, data: <p>조회수</p> },
         { data: <p>{postData.views}</p> },
         { isTh: true, data: <p>작성일</p> },
-        { data: <p>{postData.createdAt}</p> },
+        {
+          data: (
+            <p>
+              {postData.createdAt ? dateToString([...postData.createdAt]) : ''}
+            </p>
+          )
+        },
         { data: '' }
       ]
     ]);

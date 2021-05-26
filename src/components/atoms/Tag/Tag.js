@@ -7,14 +7,14 @@ const TagButton = styled.button`
   border-radius: 5px;
   border: 1px solid;
 `;
-const Tag = ({ tagName }) => {
+const Tag = ({ children }) => {
   return (
     <div>
-      <TagButton>{tagName}</TagButton>
+      <TagButton>{children}</TagButton>
     </div>
   );
 };
 
-Tag.propTypes = { tagName: PropTypes.string.isRequired };
+Tag.propTypes = { children: PropTypes.string.isRequired };
 
 export default Tag;

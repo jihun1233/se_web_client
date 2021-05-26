@@ -12,7 +12,24 @@ export const postList=({boardId, direction, page, size}) =>{
           "postId": index,
           "previewText": "string",
           "title": `${boardId}의 ${index}번 게시글`,
-          "views": 0
+          "views": 0,
+          tags: [{
+            tagId:1,
+            tag:'4학년'
+          },{
+            tagId:2,
+            tag:'창의융합프로젝트2'
+          },{
+            tagId:3,
+            tag:'1학년'
+          },{
+            tagId:4,
+            tag:'2학년'
+          },{
+            tagId:5,
+            tag:'3학년'
+          }
+        ]
         })
               
   }
@@ -76,7 +93,23 @@ export const postById = (postId) => {
         718305000
       ],
       "attaches": [],
-      "tags": []
+      "tags": [{
+          tagId:1,
+          tag:'4학년'
+        },{
+          tagId:2,
+          tag:'창의융합프로젝트2'
+        },{
+          tagId:3,
+          tag:'1학년'
+        },{
+          tagId:4,
+          tag:'2학년'
+        },{
+          tagId:5,
+          tag:'3학년'
+        }
+      ]
     }
   }
 }
