@@ -15,11 +15,13 @@ const SIGNUP = 'auth/SIGNUP';
 // const SIGNUP_SUCCESS = 'auth/SIGNUP_SUCCESS';
 // const SIGNUP_FAIL = 'auth/SIGNUP_FAIL';
 
-export const login = createAction(LOGIN, ({ id, pw }) => ({
+export const login = createAction(LOGIN, ({ id, pw, history, match }) => ({
   id,
-  pw
+  pw,
+  history,
+  match
 }));
-export const logout = createAction(LOGOUT);
+export const logout = createAction(LOGOUT, ({ history }) => ({ history }));
 export const signup = createAction(SIGNUP);
 
 function* loginSaga(action) {
@@ -27,15 +29,18 @@ function* loginSaga(action) {
     const res = yield call(loginAPI, action.payload);
     yield put({ type: LOGIN_SUCCESS, payload: res.data });
     localStorage.setItem('token', res.data.data.token);
+    // 같은 주소로 라우팅. 새로고침은 아니다
+    action.payload.history.push(action.payload.history.location.pathname);
   } catch (err) {
     yield put({ type: LOGIN_FAIL, payload: err, error: true });
   }
 }
 
-function* logoutSaga() {
+function* logoutSaga(action) {
   try {
     yield put({ type: LOGOUT_SUCCESS, payload: false });
     localStorage.removeItem('token');
+    action.payload.history.push(action.payload.history.location.pathname);
   } catch (err) {
     yield put({ type: LOGOUT_FAIL, payload: err, error: true });
   }
