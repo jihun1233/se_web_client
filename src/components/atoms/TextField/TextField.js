@@ -9,7 +9,16 @@ const CustomTextField = styled(MUTextField)`
     font-size: ${props => props.fontSize};
   }
 `;
-const TextField = ({ type, name, value, onChange, grow, fontSize, label }) => {
+const TextField = ({
+  type,
+  name,
+  value,
+  onChange,
+  grow,
+  fontSize,
+  label,
+  autoFocus
+}) => {
   return (
     <CustomTextField
       type={type}
@@ -19,6 +28,7 @@ const TextField = ({ type, name, value, onChange, grow, fontSize, label }) => {
       grow={grow}
       fontSize={fontSize}
       label={label}
+      autoFocus={autoFocus}
     />
   );
 };
@@ -28,7 +38,8 @@ TextField.defaultProps = {
   name: '',
   grow: false,
   fontSize: '1rem',
-  label: ''
+  label: '',
+  autoFocus: false
 };
 TextField.propTypes = {
   type: PropTypes.string,
@@ -37,7 +48,8 @@ TextField.propTypes = {
   onChange: PropTypes.func.isRequired,
   grow: PropTypes.bool,
   fontSize: PropTypes.string,
-  label: PropTypes.string
+  label: PropTypes.string,
+  autoFocus: PropTypes.bool
 };
 
 export default TextField;
