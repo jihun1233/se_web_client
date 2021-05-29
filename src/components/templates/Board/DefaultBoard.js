@@ -9,6 +9,8 @@ import NumberButtonGroup from '../../modules/Pagination/NumberButtonGroup';
 import Table from '../../modules/Table/Table';
 import Button from '../../atoms/Button/Button';
 import TagContainer from '../../modules/TagContainer/TagContainer';
+import TextLine from '../../atoms/TextLine/TextLine';
+import { dateArrayToString } from '../../../libs/utils';
 
 const Title = styled.h1`
   text-align: center;
@@ -31,6 +33,13 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+const ContentTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem 1rem 0 1rem;
+`;
+
 const DefaultBoard = ({ match }) => {
   const dispatch = useDispatch();
   const postList = useSelector(state => state.post.postList);
@@ -53,29 +62,28 @@ const DefaultBoard = ({ match }) => {
     dispatch(
       getPostList({
         boardId: match.params.boardId,
-        direction: match.params.direction || 'ASC',
+        direction: match.params.direction || 'DESC',
         page: match.params.page || 1,
         size: match.params.size || 30
       })
     );
   }, []);
-  const WrappingP = styled.p`
-    word-break: break-all;
-    white-space: normal;
-  `;
+
   const arrangeTableData = () => {
+    const contents = postList.data.content;
+
     setTbodies(
-      postList.data.content.map(content => {
+      contents.map(content => {
         return [
           <p>{content.postId}</p>,
-          <div>
+          <ContentTitleContainer>
             <TagContainer tagData={content.tags} />
             <Link to={`/post/${content.postId}`}>
-              <WrappingP>{content.title}</WrappingP>
+              <TextLine>{content.title}</TextLine>
             </Link>
-          </div>,
+          </ContentTitleContainer>,
           <p>{content.nickname}</p>,
-          <p>{content.createAt}</p>,
+          <p>{dateArrayToString(content.createAt)}</p>,
           <p>{content.numReply}</p>,
           <p>{content.views}</p>
         ];
@@ -102,7 +110,7 @@ const DefaultBoard = ({ match }) => {
     dispatch(
       getPostList({
         boardId: match.params.boardId,
-        direction: match.params.direction || 'ASC',
+        direction: match.params.direction || 'DESC',
         page: index,
         size: match.params.size || 30
       })
