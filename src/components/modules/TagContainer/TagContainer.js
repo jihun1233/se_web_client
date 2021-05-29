@@ -7,7 +7,7 @@ const Container = styled.div`
   display: flex;
   justify-content: ${props => props.justify};
   > * {
-    margin: 0 0.5rem;
+    margin: 0 0.1rem;
   }
 
   flex-wrap: wrap;
