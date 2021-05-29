@@ -47,9 +47,7 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
 
   useEffect(() => {
     getMenuListFromStore();
@@ -77,7 +75,7 @@ const Header = () => {
         />
       </Right>
       <Popover
-        id={id}
+        // id={id}
         open={open}
         anchorEl={anchorEl}
         onClose={handleClose}

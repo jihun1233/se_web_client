@@ -3,15 +3,11 @@ import React, { useState, useEffect } from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import Popover from '@material-ui/core/Popover';
 // import TableWithSpan from '../../modules/Table/TableWithSpan';
-import { useHistory } from 'react-router-dom';
 import { createPost } from '../../../modules/post';
 import Editor from '../../modules/CKEditor/Editor';
 import TextField from '../../atoms/TextField/TextField';
 import Button from '../../atoms/Button/Button';
-import AddTag from '../Tag/AddTag';
-import TagContainer from '../../modules/TagContainer/TagContainer';
 
 const BoardTitle = styled.h1`
   text-align: center;
@@ -42,29 +38,9 @@ const ContentTitle = styled.div`
 `;
 const H2 = styled.h2``;
 const CreatePost = ({ match }) => {
-  const history = useHistory();
   const dispatch = useDispatch();
-
   const [title, setTitle] = useState();
   const [content, setContent] = useState();
-  const [anchorEl, setAnchorEl] = useState(null);
-  const [tagList, setTagList] = useState([]);
-  const addTag = ({ tagId, text }) => {
-    const currentIndex = tagList.findIndex(
-      currentTag => currentTag.tagId === tagId
-    );
-    if (currentIndex !== -1) return;
-    setTagList([...tagList, { tagId, tag: text }]);
-  };
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
 
   const titleOnChange = e => {
     setTitle(e.target.value);
@@ -79,13 +55,9 @@ const CreatePost = ({ match }) => {
         postContent: { text: content, title },
         isNotice: 'NORMAL',
         isSecret: 'NORMAL',
-        tagList: tagList.map(tag => ({
-          tagId: tag.tagId
-        }))
+        tagList: []
       })
     );
-
-    history.push(`/board/${match.params.boardId}`);
   };
 
   useEffect(() => {
@@ -101,34 +73,13 @@ const CreatePost = ({ match }) => {
           <TextField value={title} onChange={titleOnChange} autoFocus grow />
         </GrowableContent>
       </ContentTitle>
-      <ContentTitle>
-        <H2>태그</H2>
-        <GrowableContent>
-          <TagContainer tagData={tagList} />
-        </GrowableContent>
-        <Button onClick={handleClick}>태그추가</Button>
-      </ContentTitle>
+
       <ContentText>
         <Editor value={content} onChange={contentOnChange} />
       </ContentText>
       <ButtonContainer>
         <Button onClick={createPostDispatch}>완료</Button>
       </ButtonContainer>
-      <Popover
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'right'
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left'
-        }}
-      >
-        <AddTag key={tagList} addTag={addTag} />
-      </Popover>
     </Container>
   );
 };

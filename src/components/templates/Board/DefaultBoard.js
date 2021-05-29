@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 import { getPostList } from '../../../modules/post';
 import NumberButtonGroup from '../../modules/Pagination/NumberButtonGroup';
 import Table from '../../modules/Table/Table';
+import Button from '../../atoms/Button/Button';
+import TagContainer from '../../modules/TagContainer/TagContainer';
+import TextLine from '../../atoms/TextLine/TextLine';
+import { dateArrayToString } from '../../../libs/utils';
 
 const Title = styled.h1`
   text-align: center;
@@ -29,6 +33,13 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
+const ContentTitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.5rem 1rem 0 1rem;
+`;
+
 const DefaultBoard = ({ match }) => {
   const dispatch = useDispatch();
   const postList = useSelector(state => state.post.postList);
@@ -51,22 +62,28 @@ const DefaultBoard = ({ match }) => {
     dispatch(
       getPostList({
         boardId: match.params.boardId,
-        direction: match.params.direction || 'ASC',
+        direction: match.params.direction || 'DESC',
         page: match.params.page || 1,
         size: match.params.size || 30
       })
     );
   }, []);
+
   const arrangeTableData = () => {
+    const contents = postList.data.content;
+
     setTbodies(
-      postList.data.content.map(content => {
+      contents.map(content => {
         return [
           <p>{content.postId}</p>,
-          <Link to={`/post/${content.postId}`}>
-            <p>{content.title}</p>
-          </Link>,
+          <ContentTitleContainer>
+            <TagContainer tagData={content.tags} />
+            <Link to={`/post/${content.postId}`}>
+              <TextLine>{content.title}</TextLine>
+            </Link>
+          </ContentTitleContainer>,
           <p>{content.nickname}</p>,
-          <p>{content.createAt}</p>,
+          <p>{dateArrayToString(content.createAt)}</p>,
           <p>{content.numReply}</p>,
           <p>{content.views}</p>
         ];
@@ -93,9 +110,9 @@ const DefaultBoard = ({ match }) => {
     dispatch(
       getPostList({
         boardId: match.params.boardId,
-        direction: null,
+        direction: match.params.direction || 'DESC',
         page: index,
-        size: null
+        size: match.params.size || 30
       })
     );
   };
@@ -105,7 +122,7 @@ const DefaultBoard = ({ match }) => {
       <Table colgroup={colgroup} theads={theads} tbodies={tbodies} />
       <ButtonContainer>
         <Link to={`/writepost/${match.params.boardId}`}>
-          <button type="button">게시글작성</button>
+          <Button>게시글작성</Button>
         </Link>
       </ButtonContainer>
       <PaginationContainer>

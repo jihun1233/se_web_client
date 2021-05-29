@@ -14,12 +14,11 @@ const TableCustom = styled.table`
   text-align: center;
   vertical-align: center;
   table-layout: fixed;
-  & > th,
-  td {
-    border-bottom: 2px #a6a6a6 solid;
+  & > tbody > tr {
+    border-bottom: 1px #a6a6a6 solid;
   }
   & > thead > tr {
-    border-bottom: 2px #a6a6a6 solid;
+    border-bottom: 3px #a6a6a6 solid;
   }
   ${props =>
     props.hover

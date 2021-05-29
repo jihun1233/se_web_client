@@ -11,7 +11,6 @@ const TableCustom = styled.table`
   width: 100%;
   border-top: 1px solid;
   border-collapse: collapse;
-  text-align: left;
   vertical-align: center;
   table-layout: fixed;
   border-top: 3px #66747e solid;
@@ -49,6 +48,7 @@ const Table = ({ colgroup, theads, tbodies, hover }) => {
             <Th
               colSpan={cell.colSpan ? cell.colSpan : 1}
               rowSpan={cell.rowSpan ? cell.rowSpan : 1}
+              align={cell.align ? cell.align : 'left'}
             >
               {cell.data}
             </Th>
@@ -64,6 +64,7 @@ const Table = ({ colgroup, theads, tbodies, hover }) => {
                   <Th
                     colSpan={cell.colSpan ? cell.colSpan : 1}
                     rowSpan={cell.rowSpan ? cell.rowSpan : 1}
+                    align={cell.align ? cell.align : 'left'}
                   >
                     {cell.data}
                   </Th>
@@ -71,6 +72,7 @@ const Table = ({ colgroup, theads, tbodies, hover }) => {
                   <Td
                     colSpan={cell.colSpan ? cell.colSpan : 1}
                     rowSpan={cell.rowSpan ? cell.rowSpan : 1}
+                    align={cell.align ? cell.align : 'left'}
                   >
                     {cell.data}
                   </Td>

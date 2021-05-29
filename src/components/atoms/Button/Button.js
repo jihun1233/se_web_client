@@ -16,6 +16,7 @@ const Button = ({ variant, children, backgroundColor, color, onClick }) => {
         backgroundColor={backgroundColor}
         onClick={onClick}
         color={color}
+        tabIndex={-1}
       >
         {children}
       </CustomButton>
