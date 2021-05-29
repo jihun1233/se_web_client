@@ -98,7 +98,7 @@ const post = handleActions(
       ...state,
       postListError: action.payload
     }),
-    [GET_POST_BY_ID]: state => state,
+    [GET_POST_BY_ID]: state => ({ ...state, postById: initialState.postById }),
     [GET_POST_BY_ID_SUCCESS]: (state, action) => ({
       ...state,
       postById: action.payload
