@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import TableWithSpan from '../../modules/Table/TableWithSpan';
 import { getPostById } from '../../../modules/post';
 import TagContainer from '../../modules/TagContainer/TagContainer';
+import { dateArrayToString } from '../../../libs/utils';
 
 const BoardTitle = styled.h1`
   text-align: center;
@@ -39,11 +40,7 @@ const ReadPost = ({ match, history, location }) => {
     }
   ];
   const [tbodies, setTbodies] = useState([]);
-  const dateToString = dateArray => {
-    const [year, month, date, hour, minute] = dateArray;
-    const dateString = `${year}-${month}-${date} ${hour}:${minute}`;
-    return dateString;
-  };
+
   const arrangePost = () => {
     setTbodies([
       [
@@ -68,7 +65,9 @@ const ReadPost = ({ match, history, location }) => {
         {
           data: (
             <p>
-              {postData.createdAt ? dateToString([...postData.createdAt]) : ''}
+              {postData.createdAt
+                ? dateArrayToString([...postData.createdAt])
+                : ''}
             </p>
           )
         },
