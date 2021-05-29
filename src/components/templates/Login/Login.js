@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import TextField from '../../atoms/TextField/TextField';
 import Button from '../../atoms/Button/Button';
 import Title from '../../atoms/Title/Title';
@@ -21,17 +22,15 @@ const ButtonContainer = styled.div`
 `;
 
 const Login = ({ onClose }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const loginDataFromStore = useSelector(state => state.auth.login);
 
   const [inputs, setInputs] = useState({ id: '', pw: '' });
-  const loginDispatch = () => dispatch(login(inputs));
+  const loginDispatch = () => dispatch(login({ ...inputs, history }));
   const handleChange = e => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
-  useEffect(() => {
-    console.log(loginDataFromStore);
-  }, [loginDataFromStore]);
+
   return (
     <Container>
       <Title color="#00a0de">로 그 인</Title>
