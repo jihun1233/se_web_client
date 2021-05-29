@@ -1,7 +1,8 @@
 import { rest } from 'msw';
 import { menuListMock } from './menuMock';
 import {postList, postById, createPost} from './postMock';
-import {loginMock} from './authMock'
+import {loginMock} from './authMock';
+import searchedTagList from './tagMock';
 const baseUrl = process.env.REACT_APP_API_URL;
 const handlers = [
   rest.post('/test', (req, res, ctx) => {
@@ -27,9 +28,10 @@ const handlers = [
   // 로그인
   rest.post(`${baseUrl}/signin`, (req,res,ctx)=>{
     return res(ctx.status(200), ctx.json(loginMock()));
+  }),
+  rest.get(`${baseUrl}/tag/match/:text`, (req,res,ctx)=>{
+    return res(ctx.status(200), ctx.json(searchedTagList))
   })
-
-
 ];
 
 export default handlers;
