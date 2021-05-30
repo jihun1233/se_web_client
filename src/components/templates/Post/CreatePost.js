@@ -11,7 +11,7 @@ import Editor from '../../modules/CKEditor/Editor';
 import TextField from '../../atoms/TextField/TextField';
 import Button from '../../atoms/Button/Button';
 import AddTag from '../Tag/AddTag';
-import TagContainer from '../../modules/TagContainer/TagContainer';
+import TagDeletableContainer from '../../modules/TagContainer/TagDeletableContainer';
 
 const BoardTitle = styled.h1`
   text-align: center;
@@ -28,7 +28,7 @@ const ButtonContainer = styled.div`
 `;
 const GrowableContent = styled.div``;
 const ContentText = styled.div``;
-const ContentTitle = styled.div`
+const InputContainer = styled.div`
   display: flex;
   margin: 0.5rem;
   & > * {
@@ -49,13 +49,29 @@ const CreatePost = ({ match }) => {
   const [content, setContent] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const [tagList, setTagList] = useState([]);
+  const deleteTag = tagId => {
+    const tempTagList = [...tagList];
+    const currentIndex = tempTagList.findIndex(
+      currentTag => currentTag.tagId === tagId
+    );
+    if (currentIndex === -1) return;
+    tempTagList.splice(currentIndex, 1);
+    setTagList(tempTagList);
+  };
   const addTag = ({ tagId, text }) => {
     const currentIndex = tagList.findIndex(
       currentTag => currentTag.tagId === tagId
     );
     if (currentIndex !== -1) return;
-    setTagList([...tagList, { tagId, tag: text }]);
+    setTagList([
+      ...tagList,
+      {
+        tagId,
+        tag: text
+      }
+    ]);
   };
+
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -95,19 +111,23 @@ const CreatePost = ({ match }) => {
   return (
     <Container>
       <BoardTitle>{`게시판: ${match.params.boardId}`}</BoardTitle>
-      <ContentTitle>
+      <InputContainer>
         <H2>제목</H2>
         <GrowableContent>
           <TextField value={title} onChange={titleOnChange} autoFocus grow />
         </GrowableContent>
-      </ContentTitle>
-      <ContentTitle>
+      </InputContainer>
+      <InputContainer>
         <H2>태그</H2>
         <GrowableContent>
-          <TagContainer tagData={tagList} />
+          <TagDeletableContainer
+            key={tagList}
+            tagData={tagList}
+            onDelete={deleteTag}
+          />
         </GrowableContent>
         <Button onClick={handleClick}>태그추가</Button>
-      </ContentTitle>
+      </InputContainer>
       <ContentText>
         <Editor value={content} onChange={contentOnChange} />
       </ContentText>

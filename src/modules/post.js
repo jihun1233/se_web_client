@@ -63,14 +63,19 @@ export function* postSaga() {
   yield takeLatest(CREATE_POST, createPostSaga);
 }
 const initialState = {
-  postList: {
+  postListItem: {
     data: {
-      content: [],
-      pageable: {
-        pageNumber: 1,
-        pageSize: 50
-      },
-      totalPages: 100
+      boardId: '',
+      boardNameEng: '',
+      boardNameKor: '',
+      postListItem: {
+        content: [],
+        pageable: {
+          pageNumber: 1,
+          pageSize: 50
+        },
+        totalPages: 100
+      }
     }
   },
   postListError: false,
@@ -92,7 +97,7 @@ const post = handleActions(
     [GET_POST_LIST]: state => state,
     [GET_POST_LIST_SUCCESS]: (state, action) => ({
       ...state,
-      postList: action.payload
+      postListItem: action.payload
     }),
     [GET_POST_LIST_FAIL]: (state, action) => ({
       ...state,
