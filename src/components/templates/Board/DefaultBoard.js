@@ -42,7 +42,7 @@ const ContentTitleContainer = styled.div`
 
 const DefaultBoard = ({ match }) => {
   const dispatch = useDispatch();
-  const postList = useSelector(state => state.post.postList);
+  const postList = useSelector(state => state.post.postListItem);
   const colgroup = [5, 50, 20, 15, 5, 5];
   const theads = [
     <p>번호</p>,
@@ -70,7 +70,7 @@ const DefaultBoard = ({ match }) => {
   }, []);
 
   const arrangeTableData = () => {
-    const contents = postList.data.content;
+    const contents = postList.data.postListItem.content;
 
     setTbodies(
       contents.map(content => {
@@ -95,8 +95,8 @@ const DefaultBoard = ({ match }) => {
     // const maxPage = postList.data.totalPages;
 
     setPageData({
-      nowPage: postList.data.pageable.pageNumber,
-      maxPage: postList.data.totalPages
+      nowPage: postList.data.postListItem.pageable.pageNumber + 1,
+      maxPage: postList.data.postListItem.totalPages
     });
   };
   useEffect(() => {
@@ -118,7 +118,7 @@ const DefaultBoard = ({ match }) => {
   };
   return (
     <Container>
-      <Title>{`${match.params.boardId}, Page: ${pageData.nowPage}`}</Title>
+      <Title>{`${postList.data.boardNameKor}`}</Title>
       <Table colgroup={colgroup} theads={theads} tbodies={tbodies} />
       <ButtonContainer>
         <Link to={`/writepost/${match.params.boardId}`}>
