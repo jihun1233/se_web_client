@@ -3,15 +3,16 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import DefaultBoard from '../Board/DefaultBoard';
 import ReadPost from '../Post/ReadPost';
-import CreatePost from '../Post/CreatePost';
-import AnonymousCreatePost from '../Post/AnonymousCreatePost';
+// import CreatePost from '../Post/CreatePost';
+// import AnonymousCreatePost from '../Post/AnonymousCreatePost';
+import CreatePostRouter from '../Post/CreatePostRouter';
 
 const BodyRouter = () => {
-  const checkToken = () => {
-    const token = localStorage.getItem('token');
-    if (token) return true;
-    return false;
-  };
+  // const checkToken = () => {
+  //   const token = localStorage.getItem('token');
+  //   if (token) return true;
+  //   return false;
+  // };
   return (
     <div>
       <Switch>
@@ -27,28 +28,21 @@ const BodyRouter = () => {
             <ReadPost key={location.key} match={match} history={history} />
           )}
         />
-        {checkToken() ? (
-          <Route
-            path="/writepost/:boardId?"
-            render={({ match, location, history }) => (
-              <CreatePost key={location.key} match={match} history={history} />
-            )}
-          />
-        ) : (
-          <Route
-            path="/writepost/:boardId?"
-            render={({ match, location, history }) => (
-              <AnonymousCreatePost
-                key={location.key}
-                match={match}
-                history={history}
-              />
-            )}
-          />
-        )}
         <Route exact path="/">
           <Redirect to="/board/1" />
         </Route>
+
+        <Route
+          path="/writepost/:boardId?"
+          render={({ match, location, history }) => (
+            <CreatePostRouter
+              key={location.key}
+              match={match}
+              history={history}
+            />
+          )}
+        />
+
         <Route path="/c">c</Route>
         <Route path="*">page not found</Route>
       </Switch>
