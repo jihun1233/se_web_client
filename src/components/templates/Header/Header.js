@@ -67,12 +67,7 @@ const Header = () => {
         <MenuContainer key={menuList.data} menuData={menuList.data} />
       </Middle>
       <Right>
-        <UserMenuContainer
-          onClickHeart={() => {
-            console.log('heart clicked');
-          }}
-          onClickPerson={handleClick}
-        />
+        <UserMenuContainer onClickPerson={handleClick} />
       </Right>
       <Popover
         // id={id}
