@@ -10,10 +10,6 @@ import Editor from '../../modules/CKEditor/Editor';
 import TextField from '../../atoms/TextField/TextField';
 import Button from '../../atoms/Button/Button';
 
-const BoardTitle = styled.h1`
-  text-align: center;
-  margin-bottom: 5rem;
-`;
 const Container = styled.article`
   display: flex;
   flex-direction: column;
@@ -81,7 +77,6 @@ const CreatePost = ({ match }) => {
 
   return (
     <Container>
-      <BoardTitle>{`게시판: ${match.params.boardId}`}</BoardTitle>
       <InputContainer>
         <H2>제목</H2>
         <GrowableContent>

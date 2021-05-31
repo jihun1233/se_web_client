@@ -12,11 +12,8 @@ import TextField from '../../atoms/TextField/TextField';
 import Button from '../../atoms/Button/Button';
 import AddTag from '../Tag/AddTag';
 import TagDeletableContainer from '../../modules/TagContainer/TagDeletableContainer';
+import { clearTag } from '../../../modules/tag';
 
-const BoardTitle = styled.h1`
-  text-align: center;
-  margin-bottom: 5rem;
-`;
 const Container = styled.article`
   display: flex;
   flex-direction: column;
@@ -49,6 +46,8 @@ const CreatePost = ({ match }) => {
   const [content, setContent] = useState();
   const [anchorEl, setAnchorEl] = useState(null);
   const [tagList, setTagList] = useState([]);
+
+  // 태그함수
   const deleteTag = tagId => {
     const tempTagList = [...tagList];
     const currentIndex = tempTagList.findIndex(
@@ -71,23 +70,26 @@ const CreatePost = ({ match }) => {
       }
     ]);
   };
-
+  const clearTagDispatch = () => {
+    dispatch(clearTag());
+  };
+  // popover
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
+    clearTagDispatch();
   };
-
   const open = Boolean(anchorEl);
-
+  // 입력값
   const titleOnChange = e => {
     setTitle(e.target.value);
   };
   const contentOnChange = value => {
     setContent(value);
   };
+
   const createPostDispatch = () => {
     dispatch(
       createPost({
@@ -110,7 +112,6 @@ const CreatePost = ({ match }) => {
 
   return (
     <Container>
-      <BoardTitle>{`게시판: ${match.params.boardId}`}</BoardTitle>
       <InputContainer>
         <H2>제목</H2>
         <GrowableContent>
