@@ -32,6 +32,7 @@ function* loginSaga(action) {
     // 같은 주소로 라우팅. 새로고침은 아니다
     action.payload.history.push(action.payload.history.location.pathname);
   } catch (err) {
+    alert('로그인 실패');
     yield put({ type: LOGIN_FAIL, payload: err, error: true });
   }
 }

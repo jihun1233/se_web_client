@@ -26,13 +26,21 @@ const Login = ({ onClose }) => {
   const dispatch = useDispatch();
 
   const [inputs, setInputs] = useState({ id: '', pw: '' });
-  const loginDispatch = () => dispatch(login({ ...inputs, history }));
+  const loginDispatch = () => {
+    dispatch(login({ ...inputs, history }));
+    onClose();
+  };
   const handleChange = e => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
+  const enterKeyLogin = e => {
+    if (e.key === 'Enter') {
+      loginDispatch();
+    }
+  };
 
   return (
-    <Container>
+    <Container onKeyDown={enterKeyLogin}>
       <Title color="#00a0de">로 그 인</Title>
       <TextField
         name="id"
@@ -53,7 +61,6 @@ const Login = ({ onClose }) => {
         <Button
           onClick={() => {
             loginDispatch();
-            onClose();
           }}
         >
           로그인
