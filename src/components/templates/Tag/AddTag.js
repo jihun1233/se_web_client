@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
-import Title from '../../atoms/Title/Title';
 import SelectList from '../../modules/TextList/SelectList';
 import TextField from '../../atoms/TextField/TextField';
 import { searchTag } from '../../../modules/tag';
@@ -11,7 +10,10 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 3rem;
+  padding: 1rem 3rem;
+  > * {
+    margin: 1rem 0;
+  }
 `;
 
 const AddTag = ({ addTag }) => {
@@ -52,7 +54,6 @@ const AddTag = ({ addTag }) => {
 
   return (
     <Container>
-      <Title>태그 추가</Title>
       <TextField value={searchInput} onChange={handleChange} />
       <SelectList textData={searchedTagList} />
     </Container>
