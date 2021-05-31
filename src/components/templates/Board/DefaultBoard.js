@@ -103,7 +103,6 @@ const DefaultBoard = ({ match }) => {
     arrangeTableData();
     arrangePagination();
     window.scrollTo(0, 0);
-    console.log(postList);
   }, [postList]);
 
   const onPaginationClick = index => {
