@@ -11,6 +11,7 @@ import Button from '../../atoms/Button/Button';
 import TagContainer from '../../modules/TagContainer/TagContainer';
 import TextLine from '../../atoms/TextLine/TextLine';
 import { dateArrayToString } from '../../../libs/utils';
+import Square from '../../atoms/icons/Square';
 
 const Title = styled.h1`
   text-align: center;
@@ -39,11 +40,18 @@ const ContentTitleContainer = styled.div`
   align-items: flex-start;
   padding: 0.5rem 1rem 0 1rem;
 `;
+const NicknameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  > div:first-child {
+    margin-right: 0.5rem;
+  }
+`;
 
 const DefaultBoard = ({ match }) => {
   const dispatch = useDispatch();
   const postList = useSelector(state => state.post.postListItem);
-  const colgroup = [5, 50, 20, 15, 5, 5];
+  const colgroup = [5, 55, 15, 15, 5, 5];
   const theads = [
     <p>번호</p>,
     <p>제목</p>,
@@ -82,7 +90,10 @@ const DefaultBoard = ({ match }) => {
               <TextLine>{content.title}</TextLine>
             </Link>
           </ContentTitleContainer>,
-          <p>{content.nickname}</p>,
+          <NicknameContainer>
+            {content.accountType === 'ANONYMOUS' ? null : <Square />}
+            {content.nickname}
+          </NicknameContainer>,
           <p>{dateArrayToString(content.createAt)}</p>,
           <p>{content.numReply}</p>,
           <p>{content.views}</p>

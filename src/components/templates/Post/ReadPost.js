@@ -7,6 +7,7 @@ import TableWithSpan from '../../modules/Table/TableWithSpan';
 import { getPostById } from '../../../modules/post';
 import TagContainer from '../../modules/TagContainer/TagContainer';
 import { dateArrayToString } from '../../../libs/utils';
+import Square from '../../atoms/icons/Square';
 
 const BoardTitle = styled.h1`
   text-align: center;
@@ -20,6 +21,13 @@ const Container = styled.article`
 
 const ContentText = styled.div`
   padding: 2rem;
+`;
+const NicknameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  > div:first-child {
+    margin-right: 0.5rem;
+  }
 `;
 const ReadPost = ({ match, history, location }) => {
   const dispatch = useDispatch();
@@ -57,7 +65,12 @@ const ReadPost = ({ match, history, location }) => {
       [
         { isTh: true, data: <p>작성자</p> },
         {
-          data: <p>{postData.accountNickname || postData.anonymousNickname}</p>
+          data: (
+            <NicknameContainer>
+              {postData.accountType === 'ANONYMOUS' ? null : <Square />}
+              {postData.nickname}
+            </NicknameContainer>
+          )
         },
         { isth: true, data: <p>조회수</p> },
         { data: <p>{postData.views}</p> },
@@ -85,7 +98,9 @@ const ReadPost = ({ match, history, location }) => {
   }, [postData]);
   return (
     <Container>
-      <BoardTitle>{`게시판: ${postData.boardId}`}</BoardTitle>
+      <BoardTitle>{`${
+        postData.boardNameKor ? postData.boardNameKor : ''
+      }`}</BoardTitle>
       <TableWithSpan colgroup={colgroup} theads={theads} tbodies={tbodies} />
       <ContentText>
         <div dangerouslySetInnerHTML={{ __html: postData.postContent.text }} />
