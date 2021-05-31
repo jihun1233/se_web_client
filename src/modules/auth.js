@@ -2,6 +2,7 @@ import { createAction, handleActions } from 'redux-actions';
 import { call, put, takeLatest } from 'redux-saga/effects';
 // import { createRequestSaga, createRequestSagaById } from '../libs/reducerUtils';
 import { loginAPI } from '../libs/api/auth';
+import { getMenuList } from './menu';
 
 const LOGIN = 'auth/LOGIN';
 const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
@@ -31,6 +32,7 @@ function* loginSaga(action) {
     localStorage.setItem('token', res.data.data.token);
     // 같은 주소로 라우팅. 새로고침은 아니다
     action.payload.history.push(action.payload.history.location.pathname);
+    yield put(getMenuList());
   } catch (err) {
     alert('로그인 실패');
     yield put({ type: LOGIN_FAIL, payload: err, error: true });
@@ -42,31 +44,14 @@ function* logoutSaga(action) {
     yield put({ type: LOGOUT_SUCCESS, payload: false });
     localStorage.removeItem('token');
     action.payload.history.push(action.payload.history.location.pathname);
+
+    // 로그인 후 바뀐 권한으로 메뉴 새로고침
+    yield put(getMenuList());
   } catch (err) {
     yield put({ type: LOGOUT_FAIL, payload: err, error: true });
   }
 }
-/**
- * 
- * export const createRequestSaga = (type, request) => {
-  const [SUCCESS, FAILURE] = [`${type}_SUCCESS`, `${type}_FAIL`];
-  return function* saga(action) {
-    try {
-      const res = yield call(request, action.payload);
-      yield put({
-        type: SUCCESS,
-        payload: res.data
-      });
-    } catch (err) {
-      yield put({
-        type: FAILURE,
-        payload: err,
-        error: true
-      });
-    }
-  };
-};
- */
+
 export function* authSaga() {
   yield takeLatest(LOGIN, loginSaga);
   yield takeLatest(LOGOUT, logoutSaga);
