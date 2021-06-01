@@ -34,8 +34,8 @@ const InputContainer = styled.div`
   }
 `;
 const H2 = styled.h2``;
-const H3 = styled.h3`
-  min-width: 10rem;
+const H4 = styled.h4`
+  min-width: 5rem;
 `;
 const CreatePost = ({ match }) => {
   const history = useHistory();
@@ -83,20 +83,14 @@ const CreatePost = ({ match }) => {
           <TextField value={title} onChange={titleOnChange} autoFocus grow />
         </GrowableContent>
       </InputContainer>
-
-      <ContentText>
-        <Editor value={content} onChange={contentOnChange} />
-      </ContentText>
       <InputContainer>
-        <H3>익명 이름</H3>
+        <H4>익명 이름</H4>
         <TextField
           name="anonymousNickname"
           value={anonymous.anonymousNickname}
           onChange={anonymouseOnChange}
         />
-      </InputContainer>
-      <InputContainer>
-        <H3>익명 비밀번호</H3>
+        <H4>익명 비밀번호</H4>
         <TextField
           type="password"
           name="anonymousPassword"
@@ -104,6 +98,12 @@ const CreatePost = ({ match }) => {
           onChange={anonymouseOnChange}
         />
       </InputContainer>
+
+      <ContentText>
+        <Editor value={content} onChange={contentOnChange} />
+      </ContentText>
+
+      <InputContainer />
 
       <ButtonContainer>
         <Button onClick={createPostDispatch}>완료</Button>
