@@ -10,6 +10,7 @@ export const createRequestSaga = (type, request) => {
         payload: res.data
       });
     } catch (err) {
+      alert('요청 실패, 다시시도해주십시오');
       yield put({
         type: FAILURE,
         payload: err,
@@ -31,6 +32,8 @@ export const createRequestSagaById = (type, request) => {
         meta: id
       });
     } catch (err) {
+      alert('요청 실패, 다시시도해주십시오');
+
       yield put({
         type: FAILURE,
         payload: err,
