@@ -36,7 +36,17 @@ export const postList=({boardId, direction, page, size}) =>{
     return {
         "code": 200,
         "data": {
-          "content": content,
+          "boardId": '1',
+          "boardNameEng": 'MainBoard',
+          "boardNameKor": '메인보드',
+          "postListItem":{
+            "content": content,
+            "pageable": {
+              "pageNumber": 1,
+              "pageSize": 50
+            },
+            "totalPages": 100
+          },
           "empty": false,
           "first": true,
           "last": false,
