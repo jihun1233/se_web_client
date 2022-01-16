@@ -1,0 +1,5 @@
+**/*.stories.js
+src/reportWebVitals.js
+src/*.test.js
+
+src/mocks/**/*.js
